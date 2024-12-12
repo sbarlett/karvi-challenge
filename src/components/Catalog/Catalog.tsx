@@ -1,25 +1,39 @@
-import useCatalog from "@/hook/useCatalog";
-import { mockData } from "@/mock/mockData";
+import { CatalogCars, Pagination } from "@/models";
 import { formatNumber } from "@/utils/formatNumber";
-import { Box, Button, Typography } from "@mui/material";
-import { IconSwitch } from "../assets";
-import IconArrowLeft from "../assets/IconArrowLeft";
-import IconArrowRight from "../assets/IconArrowRight";
+import {
+  Box,
+  Button,
+  Divider,
+  FormControl,
+  IconButton,
+  MenuItem,
+  Select,
+  Theme,
+  Typography,
+  useMediaQuery,
+} from "@mui/material";
+import { FC, Fragment, useState } from "react";
+import { IconSwitch, IconViewGrid } from "../assets";
 import CardProduct from "../CardProduct/CardProduct";
+import PaginationCards from "../PaginationCards";
+import { ExpandMore } from "@mui/icons-material";
 
-const Catalog = () => {
-  const { data, totalPages, page, setPage } = useCatalog();
+interface Props {
+  data: CatalogCars[];
+  pagination: Pagination;
+}
 
-  const handleNextPage = () => {
-    if (page < totalPages) {
-      setPage(page + 1);
-    }
-  };
+const Catalog: FC<Props> = ({ data, pagination }) => {
+  const { page, totalPages, setPage, totalItems } = pagination;
 
-  const handlePrevPage = () => {
-    if (page > 0) {
-      setPage(page - 1);
-    }
+  const isMobile = useMediaQuery((theme: Theme) =>
+    theme.breakpoints.down("sm")
+  );
+
+  const [order, setOrder] = useState("relevant");
+
+  const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
+    setOrder(event.target.value as string);
   };
 
   return (
@@ -34,7 +48,7 @@ const Catalog = () => {
       <Box
         sx={{
           display: "flex",
-          alignItems: "baseline",
+          alignItems: "center",
           justifyContent: "space-between",
           width: "100%",
         }}
@@ -47,34 +61,189 @@ const Catalog = () => {
             lineHeight: "20px",
           }}
         >
-          {formatNumber(mockData.totalCount)} carros encontrados
+          {formatNumber(totalItems)} carros encontrados
         </Typography>
-        <Button
-          startIcon={<IconSwitch />}
-          onClick={() => {}}
-          sx={{
-            backgroundColor: "#FFFFFF",
-            padding: "4px 0px",
-            "&:hover": {
-              backgroundColor: "#FFFFFF",
-            },
-            "& .MuiButton-startIcon": {
-              marginRight: "4px",
-            },
-          }}
-        >
+
+        <Box sx={{ display: "flex", alignItems: "center", gap: "16px" }}>
           <Typography
             sx={{
-              color: "#566DED",
-              fontSize: 14,
+              color: "#1B2141",
+              fontSize: "14px",
               fontWeight: 500,
               lineHeight: "20px",
-              textTransform: "capitalize",
             }}
           >
-            Mais relevantes
+            Ordenar por
           </Typography>
-        </Button>
+          {isMobile ? (
+            <IconButton>
+              <IconViewGrid />
+            </IconButton>
+          ) : (
+            <>
+              <Box>
+                <FormControl sx={{ border: "none" }}>
+                  <Select
+                    id="demo-simple-select"
+                    value={order}
+                    onChange={(e) => handleChange(e as any)}
+                    IconComponent={ExpandMore}
+                    displayEmpty
+                    sx={{
+                      border: "none",
+                      "& .MuiSelect-select": {
+                        padding: "0px 10px", // Remueve padding del área seleccionada
+                        backgroundColor: "transparent",
+                      },
+                      "& fieldset": {
+                        border: "none", // Remueve borde del select
+                      },
+                      "& svg": {
+                        color: "#566DED",
+                      },
+                    }}
+                    MenuProps={{
+                      PaperProps: {
+                        sx: {
+                          boxShadow: "none",
+                          border: "1px solid #E3E5ED",
+                          backgroundColor: "#FFFFFF",
+                        },
+                      },
+                    }}
+                  >
+                    <MenuItem
+                      value="relevant"
+                      sx={{
+                        backgroundColor: "#FFFFFF",
+                        "&:hover": {
+                          backgroundColor: "#FFFFFF", // Fondo al pasar el mouse
+                        },
+                        "&.Mui-selected": {
+                          backgroundColor: "#FFFFFF", // Fondo cuando está seleccionado
+                          "&:hover": {
+                            backgroundColor: "#FFFFFF", // Fondo al pasar el mouse mientras está seleccionado
+                          },
+                        },
+                      }}
+                    >
+                      <Button
+                        startIcon={<IconSwitch />}
+                        onClick={() => {}}
+                        sx={{
+                          backgroundColor: "#FFFFFF",
+                          padding: "4px 0px",
+                          "&:hover": {
+                            backgroundColor: "#FFFFFF",
+                          },
+                          "& .MuiButton-startIcon": {
+                            marginRight: "4px",
+                          },
+                        }}
+                      >
+                        <Typography
+                          sx={{
+                            color: "#566DED",
+                            fontSize: 14,
+                            fontWeight: 500,
+                            lineHeight: "20px",
+                            textTransform: "capitalize",
+                          }}
+                        >
+                          Mas relevantes
+                        </Typography>
+                      </Button>
+                    </MenuItem>
+                    <MenuItem
+                      value="min"
+                      sx={{
+                        backgroundColor: "#FFFFFF",
+                        "&:hover": {
+                          backgroundColor: "#FFFFFF", // Fondo al pasar el mouse
+                        },
+                        "&.Mui-selected": {
+                          backgroundColor: "#FFFFFF", // Fondo cuando está seleccionado
+                          "&:hover": {
+                            backgroundColor: "#FFFFFF", // Fondo al pasar el mouse mientras está seleccionado
+                          },
+                        },
+                      }}
+                    >
+                      <Button
+                        startIcon={<IconSwitch />}
+                        onClick={() => {}}
+                        sx={{
+                          backgroundColor: "#FFFFFF",
+                          padding: "4px 0px",
+                          "&:hover": {
+                            backgroundColor: "#FFFFFF",
+                          },
+                          "& .MuiButton-startIcon": {
+                            marginRight: "4px",
+                          },
+                        }}
+                      >
+                        <Typography
+                          sx={{
+                            color: "#566DED",
+                            fontSize: 14,
+                            fontWeight: 500,
+                            lineHeight: "20px",
+                            textTransform: "capitalize",
+                          }}
+                        >
+                          Menos precio
+                        </Typography>
+                      </Button>
+                    </MenuItem>
+                    <MenuItem
+                      value="max"
+                      sx={{
+                        backgroundColor: "#FFFFFF",
+                        "&:hover": {
+                          backgroundColor: "#FFFFFF", // Fondo al pasar el mouse
+                        },
+                        "&.Mui-selected": {
+                          backgroundColor: "#FFFFFF", // Fondo cuando está seleccionado
+                          "&:hover": {
+                            backgroundColor: "#FFFFFF", // Fondo al pasar el mouse mientras está seleccionado
+                          },
+                        },
+                      }}
+                    >
+                      <Button
+                        startIcon={<IconSwitch />}
+                        onClick={() => {}}
+                        sx={{
+                          backgroundColor: "#FFFFFF",
+                          padding: "4px 0px",
+                          "&:hover": {
+                            backgroundColor: "#FFFFFF",
+                          },
+                          "& .MuiButton-startIcon": {
+                            marginRight: "4px",
+                          },
+                        }}
+                      >
+                        <Typography
+                          sx={{
+                            color: "#566DED",
+                            fontSize: 14,
+                            fontWeight: 500,
+                            lineHeight: "20px",
+                            textTransform: "capitalize",
+                          }}
+                        >
+                          Mayor precio
+                        </Typography>
+                      </Button>
+                    </MenuItem>
+                  </Select>
+                </FormControl>
+              </Box>
+            </>
+          )}
+        </Box>
       </Box>
       <Box
         sx={{
@@ -85,7 +254,7 @@ const Catalog = () => {
           gridRowGap: "16px",
           justifyContent: "center",
           justifyItems: "center",
-          "@media (min-width: 600px)": {
+          "@media (min-width: 650px)": {
             gridTemplateColumns: "repeat(2, minmax(0, 1fr))",
           },
           "@media (min-width: 960px)": {
@@ -103,82 +272,29 @@ const Catalog = () => {
         }}
       >
         {data?.map((item) => (
-          <CardProduct
-            key={item.id}
-            brand={item.brand}
-            model={item.model}
-            price={item.price}
-            city={item.city}
-            year={item.year}
-            mileage={item.mileage}
-            version={item.version}
-          />
+          <Fragment key={item.id}>
+            <CardProduct
+              brand={item.brand}
+              model={item.model}
+              price={item.price}
+              city={item.city}
+              year={item.year}
+              mileage={item.mileage}
+              version={item.version}
+            />
+            {isMobile && (
+              <Divider sx={{ width: "100%", backgroundColor: "#E3E5ED" }} />
+            )}
+          </Fragment>
         ))}
       </Box>
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "center",
-          marginTop: 2,
-          width: "100%",
-        }}
-      >
-        <Button
-          startIcon={<IconArrowLeft />}
-          onClick={handlePrevPage}
-          disabled={page === 1}
-        >
-          <Typography
-            sx={{
-              color: "#5F647A",
-              fontSize: "16px",
-              fontStyle: "normal",
-              fontWeight: 500,
-              lineHeight: "24px",
-              textTransform: "capitalize",
-            }}
-          >
-            Anterior
-          </Typography>
-        </Button>
-        <Box
-          sx={{
-            display: "flex",
-            flex: 1,
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        >
-          {Array.from({ length: totalPages || 0 }, (_, index) => (
-            <Button
-              key={index + 1}
-              onClick={() => setPage(index + 1)}
-              variant={page === index + 1 ? "contained" : "outlined"}
-              sx={{ margin: 1 }}
-            >
-              {index + 1}
-            </Button>
-          ))}
-        </Box>
-        <Button
-          endIcon={<IconArrowRight />}
-          onClick={handleNextPage}
-          disabled={page === totalPages}
-        >
-          <Typography
-            sx={{
-              color: "#5F647A",
-              fontSize: "16px",
-              fontStyle: "normal",
-              fontWeight: 500,
-              lineHeight: "24px",
-              textTransform: "capitalize",
-            }}
-          >
-            Próximo
-          </Typography>
-        </Button>
-      </Box>
+      {totalPages > 1 && (
+        <PaginationCards
+          totalPages={totalPages}
+          page={page}
+          setPage={setPage}
+        />
+      )}
     </Box>
   );
 };

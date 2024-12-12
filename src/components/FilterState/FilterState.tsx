@@ -1,10 +1,10 @@
+import { useCallback } from "react";
 import { Close } from "@mui/icons-material";
 import { Box, Button, Typography } from "@mui/material";
 import { useFormContext, useWatch } from "react-hook-form";
 
-import { useCallback } from "react";
-import { IconTrash } from "../assets";
 import { capitalizeText } from "@/utils/capitalizeText";
+import { IconTrash } from "../assets";
 
 const FilterState = () => {
   const { setValue } = useFormContext();

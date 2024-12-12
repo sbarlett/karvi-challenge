@@ -1,26 +1,20 @@
-import { Box, ButtonBase, Typography } from "@mui/material";
-import IconCalculator from "../assets/IconCalculator";
-import { FC } from "react";
+import { listImageCar } from "@/constants";
 import { capitalizeText } from "@/utils/capitalizeText";
 import { formatNumber } from "@/utils/formatNumber";
+import { Box, ButtonBase, Typography } from "@mui/material";
+import { FC } from "react";
+import IconCalculator from "../assets/IconCalculator";
+import SwiperImage from "../SwiperImage";
+import { CatalogCars } from "@/models";
 
-interface Props {
-  city: string;
-  year: number;
-  brand: string;
-  model: string;
-  version: string;
-  price: number;
-  mileage: number;
-}
-
-const CardProduct: FC<Props> = ({
+const CardProduct: FC<CatalogCars> = ({
   brand,
   model,
   year,
   mileage,
   price,
   city,
+  version,
 }) => {
   return (
     <Box
@@ -32,21 +26,16 @@ const CardProduct: FC<Props> = ({
         flexDirection: "column",
         borderRadius: "12px",
         backgroundColor: "#FFFFFF",
+        "@media (max-width: 650px)": {
+          flexDirection: "row",
+          boxShadow: "none",
+          padding: "0px",
+        },
         boxShadow:
           "0px 20px 25px 0px rgba(0, 0, 0, 0.09), 0px 1px 10px 0px rgba(0, 0, 0, 0.07)",
       }}
     >
-      <Box sx={{ width: "100%" }}>
-        <img
-          src="/car.png"
-          alt="Auto"
-          style={{
-            width: "100%",
-            height: "100%",
-            borderRadius: "12px",
-          }}
-        />
-      </Box>
+      <SwiperImage banners={listImageCar} />
       <Box
         sx={{
           display: "flex",
@@ -54,10 +43,14 @@ const CardProduct: FC<Props> = ({
           flexDirection: "column",
           alignItems: "flex-start",
           gap: "8px",
+          "@media (max-width: 650px)": {
+            gap: "0px",
+            padding: "0px 8px",
+          },
         }}
       >
         <Box>
-          <Box sx={{ display: "flex", flexWrap: "wrap", gap: "8px" }}>
+          <Box sx={{ display: "flex", gap: "8px", marginBottom: "4px" }}>
             {year && (
               <Box
                 sx={{
@@ -76,6 +69,7 @@ const CardProduct: FC<Props> = ({
                     fontSize: "12px",
                     fontWeight: 500,
                     lineHeight: "16px",
+                    whiteSpace: "nowrap",
                   }}
                 >
                   {year}
@@ -100,6 +94,7 @@ const CardProduct: FC<Props> = ({
                     fontSize: "12px",
                     fontWeight: 500,
                     lineHeight: "16px",
+                    whiteSpace: "nowrap",
                   }}
                 >
                   {formatNumber(mileage)} km
@@ -107,31 +102,44 @@ const CardProduct: FC<Props> = ({
               </Box>
             )}
           </Box>
-          <Typography
+          <Box
             sx={{
-              color: "#1B2141",
-              fontSize: "16px",
-              fontStyle: "normal",
-              fontWeight: 700,
-              lineHeight: "24px",
-              marginTop: "4px",
+              display: "flex",
+              flexDirection: "column",
+              "@media (max-width: 650px)": {
+                alignItems: "center",
+                justifyContent: "center ",
+                flexDirection: "row",
+                gap: "8px",
+              },
             }}
           >
-            {capitalizeText(brand)}
-          </Typography>
-          <Typography
-            sx={{
-              color: "#1B2141",
-              fontSize: "16px",
-              fontStyle: "normal",
-
-              fontWeight: 500,
-              lineHeight: "24px",
-              lineClamp: 2,
-            }}
-          >
-            {capitalizeText(model)}
-          </Typography>
+            <Typography
+              sx={{
+                color: "#1B2141",
+                fontSize: "16px",
+                fontStyle: "normal",
+                fontWeight: 700,
+                lineHeight: "24px",
+                whiteSpace: "nowrap",
+              }}
+            >
+              {`${capitalizeText(brand)} ${capitalizeText(model)}`}
+            </Typography>
+            <Typography
+              sx={{
+                color: "#1B2141",
+                fontSize: "16px",
+                textTransform: "capitalize",
+                fontWeight: 500,
+                lineHeight: "24px",
+                lineClamp: 2,
+                whiteSpace: "nowrap",
+              }}
+            >
+              {capitalizeText(version)}
+            </Typography>
+          </Box>
         </Box>
         <Box>
           <Typography
@@ -163,6 +171,9 @@ const CardProduct: FC<Props> = ({
             borderRadius: "50px",
             background: "#566DED",
             width: "100%",
+            "@media (max-width: 650px)": {
+              display: "none",
+            },
           }}
         >
           <Box

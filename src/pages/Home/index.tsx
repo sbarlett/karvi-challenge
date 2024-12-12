@@ -1,6 +1,7 @@
 import Aside from "@/components/Aside/Aside";
 import Catalog from "@/components/Catalog/Catalog";
 import FilterState from "@/components/FilterState/FilterState";
+import useCatalog from "@/hook/useCatalog";
 import { Box } from "@mui/material";
 import { FormProvider, useForm } from "react-hook-form";
 
@@ -10,11 +11,26 @@ const Home = () => {
       filters: [],
     },
   });
+
+  const { watch } = methods;
+
+  const filters = watch("filters");
+
+  const { data, pagination, availableFilters } = useCatalog(filters);
+
   return (
-    <Box sx={{ display: "flex", padding: "60px 42px 30px 37px" }}>
+    <Box
+      sx={{
+        display: "flex",
+        padding: "60px 42px 30px 37px",
+        "@media (max-width: 650px)": {
+          padding: "20px",
+        },
+      }}
+    >
       <FormProvider {...methods}>
         <Box sx={{ display: "flex", gap: "30px", width: "100%" }}>
-          <Aside />
+          <Aside filters={availableFilters} />
           <Box
             sx={{
               display: "flex",
@@ -24,7 +40,7 @@ const Home = () => {
             }}
           >
             <FilterState />
-            <Catalog />
+            <Catalog data={data} pagination={pagination} />
           </Box>
         </Box>
       </FormProvider>

@@ -1,4 +1,4 @@
-import { mockData } from "@/mock/mockData";
+import { Filters } from "@/models";
 import { capitalizeText } from "@/utils/capitalizeText";
 import { ExpandMore } from "@mui/icons-material";
 import ArrowForwardIosSharpIcon from "@mui/icons-material/ArrowForwardIosSharp";
@@ -12,6 +12,7 @@ import MuiAccordionSummary, {
 import { styled } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
 import * as React from "react";
+import { FC } from "react";
 import { useFormContext } from "react-hook-form";
 
 const Accordion = styled((props: AccordionProps) => (
@@ -42,21 +43,6 @@ const AccordionDetails = styled(MuiAccordionDetails)({
   paddingBottom: "20px",
 });
 
-interface FilterOption {
-  id: number | string;
-  name: string | number;
-  slug?: string;
-  brand?: string;
-}
-
-interface AvailableFilters {
-  year: FilterOption[];
-  city: FilterOption[];
-  brand: FilterOption[];
-  model: FilterOption[];
-  version: FilterOption[];
-}
-
 const filterTranslations: any = {
   brand: "Marca",
   year: "Año",
@@ -67,7 +53,11 @@ const filterTranslations: any = {
 
 const filterOrder = ["brand", "model", "year", "version", "city"];
 
-const Aside = () => {
+interface Props {
+  filters: Filters;
+}
+
+const Aside: FC<Props> = ({ filters }) => {
   const [expanded, setExpanded] = React.useState<string | null>(null);
 
   const { setValue, getValues } = useFormContext();
@@ -79,16 +69,25 @@ const Aside = () => {
 
   const handleSelectFilter = (filter: string) => {
     const { filters } = getValues();
-    const newFilters = filters.includes(filter)
+    const filterText = filter.toString().toLowerCase();
+    const newFilters = filters.includes(filterText)
       ? filters
-      : [...filters, filter];
+      : [...filters, filterText];
     setValue("filters", newFilters);
   };
 
-  const filters: AvailableFilters = mockData.availableFilters;
-
   return (
-    <Box sx={{ width: 264, margin: "16px" }}>
+    <Box
+      sx={{
+        width: 264,
+        margin: "16px",
+        display: "none",
+        "@media (min-width: 650px)": {
+          display: "flex",
+          flexDirection: "column",
+        },
+      }}
+    >
       {filterOrder.map((filterKey) => (
         <Accordion
           key={filterKey}
@@ -114,7 +113,7 @@ const Aside = () => {
           </AccordionSummary>
           <AccordionDetails>
             <Box sx={{ display: "flex", flexDirection: "column", gap: "8px" }}>
-              {filters[filterKey as keyof AvailableFilters].map((opt: any) => (
+              {filters[filterKey as keyof Filters].map((opt: any) => (
                 <Button
                   key={opt.name}
                   sx={{
@@ -141,16 +140,6 @@ const Aside = () => {
                     }}
                   >
                     {capitalizeText(opt?.name)}{" "}
-                    {/* <span
-                      style={{
-                        fontSize: 14,
-                        fontWeight: 500,
-                        lineHeight: "20px",
-                        color: "grey",
-                      }}
-                    >
-                      ({opt.count})
-                    </span> */}
                   </Typography>
                 </Button>
               ))}
