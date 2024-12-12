@@ -1,16 +1,15 @@
 import { mockData } from "@/mock/mockData";
 import { CatalogCars } from "@/models";
-import { getHome } from "@/service/getHome";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 
 const ITEMS_PER_PAGE = 12;
 
-const useCatalog = (filters: string[]) => {
+const useCatalog = (filters: string[], order: string) => {
   const [page, setPage] = useState(1);
 
   const { data } = useQuery({
-    queryKey: ["home", page, filters],
+    queryKey: ["home", page, filters, order],
     queryFn: async () => {
       const data = mockData.items;
 
@@ -28,17 +27,22 @@ const useCatalog = (filters: string[]) => {
 
       const dataFiltered = filters.length === 0 ? data : filteredData;
 
-      const startIndex = (page - 1) * ITEMS_PER_PAGE;
+      const sortedData = dataFiltered.sort((a, b) => {
+        if (order === "max") return b.price - a.price;
+        if (order === "min") return a.price - b.price;
+        return 0;
+      });
 
-      const paginatedData = dataFiltered.slice(
+      const startIndex = (page - 1) * ITEMS_PER_PAGE;
+      const paginatedData = sortedData.slice(
         startIndex,
         startIndex + ITEMS_PER_PAGE
       );
 
       return {
         paginatedData,
-        totalPages: Math.ceil(dataFiltered.length / ITEMS_PER_PAGE),
-        totalItems: dataFiltered.length,
+        totalPages: Math.ceil(sortedData.length / ITEMS_PER_PAGE),
+        totalItems: sortedData.length,
       };
     },
   });

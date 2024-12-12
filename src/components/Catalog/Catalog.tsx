@@ -1,10 +1,10 @@
 import { CatalogCars, Pagination } from "@/models";
 import { formatNumber } from "@/utils/formatNumber";
+import { ExpandMore } from "@mui/icons-material";
 import {
   Box,
   Button,
   Divider,
-  FormControl,
   IconButton,
   MenuItem,
   Select,
@@ -12,11 +12,11 @@ import {
   Typography,
   useMediaQuery,
 } from "@mui/material";
-import { FC, Fragment, useState } from "react";
+import { FC, Fragment } from "react";
+import { Controller, useFormContext } from "react-hook-form";
 import { IconSwitch, IconViewGrid } from "../assets";
 import CardProduct from "../CardProduct/CardProduct";
 import PaginationCards from "../PaginationCards";
-import { ExpandMore } from "@mui/icons-material";
 
 interface Props {
   data: CatalogCars[];
@@ -26,15 +26,11 @@ interface Props {
 const Catalog: FC<Props> = ({ data, pagination }) => {
   const { page, totalPages, setPage, totalItems } = pagination;
 
+  const { control } = useFormContext();
+
   const isMobile = useMediaQuery((theme: Theme) =>
     theme.breakpoints.down("sm")
   );
-
-  const [order, setOrder] = useState("relevant");
-
-  const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
-    setOrder(event.target.value as string);
-  };
 
   return (
     <Box
@@ -82,164 +78,170 @@ const Catalog: FC<Props> = ({ data, pagination }) => {
           ) : (
             <>
               <Box>
-                <FormControl sx={{ border: "none" }}>
-                  <Select
-                    id="demo-simple-select"
-                    value={order}
-                    onChange={(e) => handleChange(e as any)}
-                    IconComponent={ExpandMore}
-                    displayEmpty
-                    sx={{
-                      border: "none",
-                      "& .MuiSelect-select": {
-                        padding: "0px 10px", // Remueve padding del área seleccionada
-                        backgroundColor: "transparent",
-                      },
-                      "& fieldset": {
-                        border: "none", // Remueve borde del select
-                      },
-                      "& svg": {
-                        color: "#566DED",
-                      },
-                    }}
-                    MenuProps={{
-                      PaperProps: {
-                        sx: {
-                          boxShadow: "none",
-                          border: "1px solid #E3E5ED",
-                          backgroundColor: "#FFFFFF",
-                        },
-                      },
-                    }}
-                  >
-                    <MenuItem
-                      value="relevant"
+                <Controller
+                  control={control}
+                  name="order"
+                  render={({ field }) => (
+                    <Select
+                      {...field}
+                      value={field.value} // Asegurarte de que el valor del field se sincroniza
+                      onChange={(e) => {
+                        field.onChange(e); // Actualiza React Hook Form
+                      }}
+                      IconComponent={ExpandMore}
+                      displayEmpty
                       sx={{
-                        backgroundColor: "#FFFFFF",
-                        "&:hover": {
-                          backgroundColor: "#FFFFFF", // Fondo al pasar el mouse
+                        border: "none",
+                        "& .MuiSelect-select": {
+                          padding: "0px 10px", // Remueve padding del área seleccionada
+                          backgroundColor: "transparent",
                         },
-                        "&.Mui-selected": {
-                          backgroundColor: "#FFFFFF", // Fondo cuando está seleccionado
-                          "&:hover": {
-                            backgroundColor: "#FFFFFF", // Fondo al pasar el mouse mientras está seleccionado
+                        "& fieldset": {
+                          border: "none", // Remueve borde del select
+                        },
+                        "& svg": {
+                          color: "#566DED",
+                        },
+                      }}
+                      MenuProps={{
+                        PaperProps: {
+                          sx: {
+                            boxShadow: "none",
+                            border: "1px solid #E3E5ED",
+                            backgroundColor: "#FFFFFF",
                           },
                         },
                       }}
                     >
-                      <Button
-                        startIcon={<IconSwitch />}
-                        onClick={() => {}}
+                      <MenuItem
+                        value="relevant"
                         sx={{
                           backgroundColor: "#FFFFFF",
-                          padding: "4px 0px",
                           "&:hover": {
-                            backgroundColor: "#FFFFFF",
+                            backgroundColor: "#FFFFFF", // Fondo al pasar el mouse
                           },
-                          "& .MuiButton-startIcon": {
-                            marginRight: "4px",
+                          "&.Mui-selected": {
+                            backgroundColor: "#FFFFFF", // Fondo cuando está seleccionado
+                            "&:hover": {
+                              backgroundColor: "#FFFFFF", // Fondo al pasar el mouse mientras está seleccionado
+                            },
                           },
                         }}
                       >
-                        <Typography
+                        <Button
+                          startIcon={<IconSwitch />}
+                          onClick={() => {}}
                           sx={{
-                            color: "#566DED",
-                            fontSize: 14,
-                            fontWeight: 500,
-                            lineHeight: "20px",
-                            textTransform: "capitalize",
+                            backgroundColor: "#FFFFFF",
+                            padding: "4px 0px",
+                            "&:hover": {
+                              backgroundColor: "#FFFFFF",
+                            },
+                            "& .MuiButton-startIcon": {
+                              marginRight: "4px",
+                            },
                           }}
                         >
-                          Mas relevantes
-                        </Typography>
-                      </Button>
-                    </MenuItem>
-                    <MenuItem
-                      value="min"
-                      sx={{
-                        backgroundColor: "#FFFFFF",
-                        "&:hover": {
-                          backgroundColor: "#FFFFFF", // Fondo al pasar el mouse
-                        },
-                        "&.Mui-selected": {
-                          backgroundColor: "#FFFFFF", // Fondo cuando está seleccionado
-                          "&:hover": {
-                            backgroundColor: "#FFFFFF", // Fondo al pasar el mouse mientras está seleccionado
-                          },
-                        },
-                      }}
-                    >
-                      <Button
-                        startIcon={<IconSwitch />}
-                        onClick={() => {}}
+                          <Typography
+                            sx={{
+                              color: "#566DED",
+                              fontSize: 14,
+                              fontWeight: 500,
+                              lineHeight: "20px",
+                              textTransform: "capitalize",
+                            }}
+                          >
+                            Mas relevantes
+                          </Typography>
+                        </Button>
+                      </MenuItem>
+                      <MenuItem
+                        value="max"
                         sx={{
                           backgroundColor: "#FFFFFF",
-                          padding: "4px 0px",
                           "&:hover": {
-                            backgroundColor: "#FFFFFF",
+                            backgroundColor: "#FFFFFF", // Fondo al pasar el mouse
                           },
-                          "& .MuiButton-startIcon": {
-                            marginRight: "4px",
+                          "&.Mui-selected": {
+                            backgroundColor: "#FFFFFF", // Fondo cuando está seleccionado
+                            "&:hover": {
+                              backgroundColor: "#FFFFFF", // Fondo al pasar el mouse mientras está seleccionado
+                            },
                           },
                         }}
                       >
-                        <Typography
+                        <Button
+                          startIcon={<IconSwitch />}
+                          onClick={() => {}}
                           sx={{
-                            color: "#566DED",
-                            fontSize: 14,
-                            fontWeight: 500,
-                            lineHeight: "20px",
-                            textTransform: "capitalize",
+                            backgroundColor: "#FFFFFF",
+                            padding: "4px 0px",
+                            "&:hover": {
+                              backgroundColor: "#FFFFFF",
+                            },
+                            "& .MuiButton-startIcon": {
+                              marginRight: "4px",
+                            },
                           }}
                         >
-                          Menos precio
-                        </Typography>
-                      </Button>
-                    </MenuItem>
-                    <MenuItem
-                      value="max"
-                      sx={{
-                        backgroundColor: "#FFFFFF",
-                        "&:hover": {
-                          backgroundColor: "#FFFFFF", // Fondo al pasar el mouse
-                        },
-                        "&.Mui-selected": {
-                          backgroundColor: "#FFFFFF", // Fondo cuando está seleccionado
-                          "&:hover": {
-                            backgroundColor: "#FFFFFF", // Fondo al pasar el mouse mientras está seleccionado
-                          },
-                        },
-                      }}
-                    >
-                      <Button
-                        startIcon={<IconSwitch />}
-                        onClick={() => {}}
+                          <Typography
+                            sx={{
+                              color: "#566DED",
+                              fontSize: 14,
+                              fontWeight: 500,
+                              lineHeight: "20px",
+                              textTransform: "capitalize",
+                            }}
+                          >
+                            Mayor precio
+                          </Typography>
+                        </Button>
+                      </MenuItem>
+                      <MenuItem
+                        value="min"
                         sx={{
                           backgroundColor: "#FFFFFF",
-                          padding: "4px 0px",
                           "&:hover": {
-                            backgroundColor: "#FFFFFF",
+                            backgroundColor: "#FFFFFF", // Fondo al pasar el mouse
                           },
-                          "& .MuiButton-startIcon": {
-                            marginRight: "4px",
+                          "&.Mui-selected": {
+                            backgroundColor: "#FFFFFF", // Fondo cuando está seleccionado
+                            "&:hover": {
+                              backgroundColor: "#FFFFFF", // Fondo al pasar el mouse mientras está seleccionado
+                            },
                           },
                         }}
                       >
-                        <Typography
+                        <Button
+                          startIcon={<IconSwitch />}
+                          onClick={() => {}}
                           sx={{
-                            color: "#566DED",
-                            fontSize: 14,
-                            fontWeight: 500,
-                            lineHeight: "20px",
-                            textTransform: "capitalize",
+                            backgroundColor: "#FFFFFF",
+                            padding: "4px 0px",
+                            "&:hover": {
+                              backgroundColor: "#FFFFFF",
+                            },
+                            "& .MuiButton-startIcon": {
+                              marginRight: "4px",
+                            },
                           }}
                         >
-                          Mayor precio
-                        </Typography>
-                      </Button>
-                    </MenuItem>
-                  </Select>
-                </FormControl>
+                          <Typography
+                            sx={{
+                              color: "#566DED",
+                              fontSize: 14,
+                              fontWeight: 500,
+                              lineHeight: "20px",
+                              textTransform: "capitalize",
+                            }}
+                          >
+                            Menor precio
+                          </Typography>
+                        </Button>
+                      </MenuItem>
+                    </Select>
+                  )}
+                />
               </Box>
             </>
           )}

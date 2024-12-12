@@ -9,14 +9,16 @@ const Home = () => {
   const methods = useForm({
     defaultValues: {
       filters: [],
+      order: "relevant",
     },
   });
 
   const { watch } = methods;
 
   const filters = watch("filters");
+  const order = watch("order");
 
-  const { data, pagination, availableFilters } = useCatalog(filters);
+  const { data, pagination, availableFilters } = useCatalog(filters, order);
 
   return (
     <Box
