@@ -6,7 +6,7 @@ interface FilterOption {
 }
 
 export interface CatalogCars {
-  id?: number;
+  id: number;
   city: string;
   year: number;
   brand: string;
@@ -14,6 +14,7 @@ export interface CatalogCars {
   version: string;
   price: number;
   mileage: number;
+  fav: boolean;
 }
 
 export interface Data {

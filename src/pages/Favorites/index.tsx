@@ -1,10 +1,17 @@
 import Catalog from "@/components/Catalog";
 import WrapperLayout from "@/components/layout/WrapperLayout";
 import useCatalog from "@/hook/useCatalog";
-import { useFormContext } from "react-hook-form";
+import { useForm } from "react-hook-form";
 
-const Home = () => {
-  const { watch } = useFormContext();
+const FavoriteCars = () => {
+  const methods = useForm({
+    defaultValues: {
+      filters: [],
+      order: "relevant",
+    },
+  });
+
+  const { watch } = methods;
 
   const filters = watch("filters");
   const order = watch("order");
@@ -14,17 +21,18 @@ const Home = () => {
     order
   );
 
-  console.log(order);
-  
+  const catalogFavorite = data.filter((car) => car.fav === true);
+
   return (
     <WrapperLayout availableFilters={availableFilters}>
       <Catalog
-        data={data}
+        data={catalogFavorite}
         pagination={pagination}
         onFavorite={toggleFavorite}
+        hiddenFavoritePage={false}
       />
     </WrapperLayout>
   );
 };
 
-export default Home;
+export default FavoriteCars;
