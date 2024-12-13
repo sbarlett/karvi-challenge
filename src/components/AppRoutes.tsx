@@ -8,7 +8,7 @@ function AppRoutes() {
   const methods = useForm({
     defaultValues: {
       filters: [],
-      order: "relevant",
+      order: "max",
     },
   });
   return (

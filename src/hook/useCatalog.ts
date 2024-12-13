@@ -1,6 +1,6 @@
 import { mockData } from "@/mock/mockData";
 import { CatalogCars } from "@/models";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 
 const ITEMS_PER_PAGE = 12;
 
@@ -20,27 +20,32 @@ const useCatalog = (filters: string[], order: string) => {
     localStorage.setItem("catalog", JSON.stringify(catalog));
   }, [catalog]);
 
-  const toggleFavorite = (id: number) => {
-    const updatedCatalog = catalog.map((car) => {
-      if (car.id === id) {
-        return { ...car, fav: !car.fav };
-      }
-      return car;
-    });
-    setCatalog(updatedCatalog);
-  };
+  const toggleFavorite = useCallback(
+    (id: number) => {
+      const updatedCatalog = catalog.map((car) => {
+        if (car.id === id) {
+          return { ...car, fav: !car.fav };
+        }
+        return car;
+      });
+      setCatalog(updatedCatalog);
+    },
+    [catalog]
+  );
 
-  const filteredData = catalog.filter((car) => {
-    return filters.some((filter) => {
-      return (
-        car.brand.toLowerCase() === filter.toLowerCase() ||
-        car.model.toLowerCase() === filter.toLowerCase() ||
-        car.version.toLowerCase() === filter.toLowerCase() ||
-        car.city.toLowerCase() === filter.toLowerCase() ||
-        car.year.toString() === filter.toLowerCase()
-      );
+  const filteredData = useMemo(() => {
+    return catalog.filter((car) => {
+      return filters.some((filter) => {
+        return (
+          car.brand.toLowerCase() === filter.toLowerCase() ||
+          car.model.toLowerCase() === filter.toLowerCase() ||
+          car.version.toLowerCase() === filter.toLowerCase() ||
+          car.city.toLowerCase() === filter.toLowerCase() ||
+          car.year.toString() === filter.toLowerCase()
+        );
+      });
     });
-  });
+  }, [catalog, filters]);
 
   const dataFiltered = filters.length === 0 ? catalog : filteredData;
 

@@ -14,8 +14,6 @@ const Home = () => {
     order
   );
 
-  console.log(order);
-  
   return (
     <WrapperLayout availableFilters={availableFilters}>
       <Catalog
