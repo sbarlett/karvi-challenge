@@ -2,7 +2,7 @@ import { filterOrder, filterTranslations } from "@/constants";
 import { Filters } from "@/models";
 import { capitalizeText } from "@/utils/capitalizeText";
 import { ExpandMore } from "@mui/icons-material";
-import { useState } from "react";
+import { memo, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import {
   Container,
@@ -15,7 +15,7 @@ import {
   Wrapper,
 } from "./styles";
 
-const Aside = ({ filters }: { filters: Filters }) => {
+const MenuAside = ({ filters }: { filters: Filters }) => {
   const { setValue, getValues } = useFormContext();
 
   const [expanded, setExpanded] = useState<string | null>(null);
@@ -69,4 +69,4 @@ const Aside = ({ filters }: { filters: Filters }) => {
   );
 };
 
-export default Aside;
+export default memo(MenuAside);

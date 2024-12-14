@@ -1,13 +1,15 @@
-import Aside from "@/components/Aside";
-import FilterState from "@/components/FilterState";
+import MenuAside from "@/components/MenuAside";
+import TopBarFilter from "@/components/TopBarFilter";
 import { Filters } from "@/models";
 import { Box, styled } from "@mui/material";
 import Link from "@mui/material/Link";
 
 const WrapperLayout = ({
   availableFilters,
+  totalCars,
   children,
 }: {
+  totalCars?: number;
   availableFilters: Filters;
   children: React.ReactNode;
 }) => {
@@ -54,9 +56,9 @@ const WrapperLayout = ({
       </Box>
       <Main>
         <Container>
-          <Aside filters={availableFilters} />
+          <MenuAside filters={availableFilters} />
           <Wrapper>
-            <FilterState />
+            <TopBarFilter totalCars={totalCars}/>
             {children}
           </Wrapper>
         </Container>

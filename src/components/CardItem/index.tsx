@@ -1,13 +1,15 @@
-import { FC, useState } from "react";
 import { listImageCar } from "@/constants";
 import { CatalogCars } from "@/models";
 import { capitalizeText } from "@/utils/capitalizeText";
 import { formatNumber } from "@/utils/formatNumber";
+import FavoriteIcon from "@mui/icons-material/Favorite";
 import { Box } from "@mui/material";
+import { IconHeart } from "../assets";
 import SwiperImage from "../SwiperImage";
 import Badge from "./Badge";
 import ButtonCard from "./ButtonCard";
 import {
+  ButtonFav,
   Card,
   CityText,
   Container,
@@ -18,7 +20,7 @@ import {
   WrapperBadge,
 } from "./styles";
 
-const CardProduct = ({
+const CardItem = ({
   carData,
   onFavorite,
 }: {
@@ -28,11 +30,14 @@ const CardProduct = ({
   const { brand, model, year, mileage, price, city, version, fav } = carData;
   return (
     <Card>
-      <SwiperImage
-        images={listImageCar}
-        favoriteCar={fav}
-        onFavorite={onFavorite}
-      />
+      <SwiperImage images={listImageCar} favoriteCar={fav} onFavorite={onFavorite} />
+      <ButtonFav onClick={onFavorite}>
+        {fav ? (
+          <FavoriteIcon sx={{ color: "red", fontSize: 20 }} />
+        ) : (
+          <IconHeart />
+        )}
+      </ButtonFav>
       <Content>
         <Box>
           <WrapperBadge>
@@ -54,4 +59,4 @@ const CardProduct = ({
   );
 };
 
-export default CardProduct;
+export default CardItem;

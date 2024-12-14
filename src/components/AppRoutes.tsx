@@ -1,3 +1,4 @@
+import { CatalogProvider } from "@/context/CatalogContext";
 import FavoriteCars from "@/pages/Favorites";
 import Home from "@/pages/Home";
 import { routes } from "@/utils/routes";
@@ -13,10 +14,12 @@ function AppRoutes() {
   });
   return (
     <FormProvider {...methods}>
-      <Routes>
-        <Route path={routes.home.path} element={<Home />} />
-        <Route path={routes.favorite.path} element={<FavoriteCars />} />
-      </Routes>
+      <CatalogProvider>
+        <Routes>
+          <Route path={routes.home.path} element={<Home />} />
+          <Route path={routes.favorite.path} element={<FavoriteCars />} />
+        </Routes>
+      </CatalogProvider>
     </FormProvider>
   );
 }

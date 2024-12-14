@@ -35,7 +35,7 @@ export interface Filters {
   version: FilterOption[];
 }
 
-export interface Pagination {
+export interface PaginationType {
   page: number;
   totalPages: number;
   setPage: (page: number) => void;

@@ -1,7 +1,7 @@
 import { ImageClasses } from "@/constants";
-import { IconButton, styled, Theme } from "@mui/material";
+import { Box, IconButton, styled, Theme } from "@mui/material";
 
-export const ImageContainer = styled("div")({
+export const ImageContainer = styled(Box)({
   display: "flex",
   justifyContent: "center",
   flexDirection: "column",
@@ -50,7 +50,7 @@ export const ImageContainer = styled("div")({
   },
 });
 
-export const ImageContent = styled("div")<{ withClickEvent?: boolean }>(
+export const ImageContent = styled(Box)<{ withClickEvent?: boolean }>(
   ({ theme }: { theme: Theme }) => ({
     cursor: "pointer",
     display: "flex",
@@ -75,6 +75,7 @@ export const ButtonFav = styled(IconButton)({
   right: 8,
   backgroundColor: "#FFFFFF",
   padding: "4px",
+  zIndex: 150,
   borderRadius: "64px",
   "&:hover": {
     backgroundColor: "#FFFFFF",

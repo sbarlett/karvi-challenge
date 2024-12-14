@@ -1,21 +1,12 @@
 import Catalog from "@/components/Catalog";
 import WrapperLayout from "@/components/layout/WrapperLayout";
-import useCatalog from "@/hook/useCatalog";
-import { useFormContext } from "react-hook-form";
+import { useCatalogContext } from "@/context/CatalogContext";
 
 const Home = () => {
-  const { watch } = useFormContext();
-
-  const filters = watch("filters");
-  const order = watch("order");
-
-  const { data, pagination, availableFilters, toggleFavorite } = useCatalog(
-    filters,
-    order
-  );
-
+  const { data, pagination, availableFilters, toggleFavorite } =
+    useCatalogContext();
   return (
-    <WrapperLayout availableFilters={availableFilters}>
+    <WrapperLayout availableFilters={availableFilters} totalCars={pagination.totalItems}>
       <Catalog
         data={data}
         pagination={pagination}

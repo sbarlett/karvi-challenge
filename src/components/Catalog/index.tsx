@@ -1,104 +1,31 @@
+import { CatalogCars, PaginationType } from "@/models";
 import { Fragment } from "react";
-import { Controller, useFormContext } from "react-hook-form";
-import { selectOptions } from "@/constants";
-import { CatalogCars, Pagination } from "@/models";
-import { formatNumber } from "@/utils/formatNumber";
-import { ExpandMore } from "@mui/icons-material";
-import { Box, IconButton, Theme, useMediaQuery } from "@mui/material";
-import { IconSwitch, IconViewGrid } from "../assets";
-import CardProduct from "../CardProduct";
-import PaginationCards from "../PaginationCards";
-import {
-  ButtonStyles,
-  CatalogContainer,
-  GridContainer,
-  HeaderContainer,
-  MenuItemStyles,
-  MuiDivider,
-  MuiSelect,
-  OrderByContainer,
-  Paragraph,
-  TextButton,
-} from "./styles";
+import CardItem from "../CardItem";
+import Pagination from "../Pagination";
+import { CatalogContainer, GridContainer, MuiDivider } from "./styles";
+import { useLocation } from "react-router-dom";
+import { routes } from "@/utils/routes";
 
 const Catalog = ({
   data,
   pagination,
   onFavorite,
-  hiddenFavoritePage = true,
 }: {
   data: CatalogCars[];
-  pagination: Pagination;
+  pagination: PaginationType;
   onFavorite: (id: number) => void;
-  hiddenFavoritePage?: boolean;
 }) => {
-  const { page, totalPages, setPage, totalItems } = pagination;
+  const { page, totalPages, setPage } = pagination;
 
-  const { control } = useFormContext();
-
-  const isMobile = useMediaQuery((theme: Theme) =>
-    theme.breakpoints.down("sm")
-  );
+  const location = useLocation();
+  const isFavoritePage = location.pathname === routes.favorite.path;
 
   return (
     <CatalogContainer>
-      {hiddenFavoritePage && (
-        <HeaderContainer>
-          <Paragraph>{formatNumber(totalItems)} carros encontrados</Paragraph>
-          <OrderByContainer>
-            <Paragraph>Ordenar por</Paragraph>
-            {isMobile ? (
-              <IconButton>
-                <IconViewGrid />
-              </IconButton>
-            ) : (
-              <>
-                <Box>
-                  <Controller
-                    control={control}
-                    name="order"
-                    render={({ field }) => (
-                      <MuiSelect
-                        {...field}
-                        value={field.value}
-                        onChange={(e) => {
-                          field.onChange(e);
-                        }}
-                        IconComponent={ExpandMore}
-                        displayEmpty
-                        MenuProps={{
-                          PaperProps: {
-                            sx: {
-                              boxShadow: "none",
-                              border: "1px solid #E3E5ED",
-                              backgroundColor: "#FFFFFF",
-                            },
-                          },
-                        }}
-                      >
-                        {selectOptions.map((option) => (
-                          <MenuItemStyles
-                            value={option.value}
-                            key={option.value}
-                          >
-                            <ButtonStyles startIcon={<IconSwitch />}>
-                              <TextButton>{option.label}</TextButton>
-                            </ButtonStyles>
-                          </MenuItemStyles>
-                        ))}
-                      </MuiSelect>
-                    )}
-                  />
-                </Box>
-              </>
-            )}
-          </OrderByContainer>
-        </HeaderContainer>
-      )}
       <GridContainer>
         {data?.map((item) => (
           <Fragment key={item.id}>
-            <CardProduct
+            <CardItem
               carData={item}
               onFavorite={() => onFavorite(item.id)}
             />
@@ -106,8 +33,8 @@ const Catalog = ({
           </Fragment>
         ))}
       </GridContainer>
-      {totalPages > 1 && hiddenFavoritePage && (
-        <PaginationCards
+      {totalPages > 1 && !isFavoritePage && (
+        <Pagination
           totalPages={totalPages}
           page={page}
           setPage={setPage}

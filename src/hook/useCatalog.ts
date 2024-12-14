@@ -1,15 +1,16 @@
+import { ITEMS_PER_PAGE } from "@/constants";
 import { mockData } from "@/mock/mockData";
 import { CatalogCars } from "@/models";
 import { useCallback, useEffect, useMemo, useState } from "react";
-
-const ITEMS_PER_PAGE = 12;
 
 const useCatalog = (filters: string[], order: string) => {
   const [page, setPage] = useState<number>(1);
 
   const data = mockData.items;
 
-  const adapterData = data.map((car) => ({ ...car, fav: false }));
+  const adapterData = useMemo(() => {
+    return data.map((car) => ({ ...car, fav: false }));
+  }, [data]);
 
   const [catalog, setCatalog] = useState<CatalogCars[]>(() => {
     const storage = localStorage.getItem("catalog");

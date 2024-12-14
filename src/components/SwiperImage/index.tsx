@@ -67,13 +67,6 @@ const SwiperImage = ({
             <SwiperSlide key={img.id}>
               <ImageContent>
                 <img src={img.image_url} alt={`Image ${img.id}`} />
-                <ButtonFav onClick={onFavorite}>
-                  {favoriteCar ? (
-                    <FavoriteIcon sx={{ color: "red", fontSize: 20 }} />
-                  ) : (
-                    <IconHeart />
-                  )}
-                </ButtonFav>
               </ImageContent>
             </SwiperSlide>
           ))}

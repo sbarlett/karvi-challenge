@@ -7,7 +7,7 @@ import {
   PaginationText,
 } from "./styles";
 
-const PaginationCards = ({
+const Pagination = ({
   totalPages,
   page,
   setPage,
@@ -74,4 +74,4 @@ const PaginationCards = ({
   );
 };
 
-export default PaginationCards;
+export default Pagination;
