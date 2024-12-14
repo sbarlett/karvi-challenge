@@ -3,7 +3,7 @@ import { CatalogCars } from "@/models";
 import { capitalizeText } from "@/utils/capitalizeText";
 import { formatNumber } from "@/utils/formatNumber";
 import { Box } from "@mui/material";
-import SwiperImage from "../SwiperImage";
+import SliderImage from "../SliderImage";
 import Badge from "./Badge";
 import ButtonCard from "./ButtonCard";
 import {
@@ -27,7 +27,7 @@ const CardItem = ({
   const { brand, model, year, mileage, price, city, version, fav } = carData;
   return (
     <Card>
-      <SwiperImage
+      <SliderImage
         images={listImageCar}
         favoriteCar={fav}
         onFavorite={onFavorite}

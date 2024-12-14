@@ -2,7 +2,7 @@ import MenuAside from "@/components/MenuAside";
 import TopBarFilter from "@/components/TopBarFilter";
 import { Filters } from "@/models";
 import { Box, styled } from "@mui/material";
-import Link from "@mui/material/Link";
+import DrawerNavBar from "../DrawerNavBar";
 
 const WrapperLayout = ({
   availableFilters,
@@ -15,50 +15,12 @@ const WrapperLayout = ({
 }) => {
   return (
     <>
-      <Box
-        sx={{
-          padding: "5px 20px",
-          display: "flex",
-          gap: "20px",
-          alignItems: "center",
-          justifyContent: "center",
-          width: "100%",
-        }}
-      >
-        <Link
-          href="/"
-          sx={{
-            textDecoration: "none",
-            color: "#566DED",
-            fontSize: "16px",
-            fontWeight: "bold",
-            "&:hover": {
-              textDecoration: "underline",
-            },
-          }}
-        >
-          Home
-        </Link>
-        <Link
-          href="/favorites-cars"
-          sx={{
-            textDecoration: "none",
-            color: "#566DED",
-            fontSize: "16px",
-            fontWeight: "bold",
-            "&:hover": {
-              textDecoration: "underline",
-            },
-          }}
-        >
-          Favorites
-        </Link>
-      </Box>
+      <DrawerNavBar />
       <Main>
         <Container>
           <MenuAside filters={availableFilters} />
           <Wrapper>
-            <TopBarFilter totalCars={totalCars}/>
+            <TopBarFilter totalCars={totalCars} />
             {children}
           </Wrapper>
         </Container>

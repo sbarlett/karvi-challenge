@@ -15,7 +15,7 @@ export interface Image {
   image_url: string;
 }
 
-const SwiperImage = ({
+const SliderImage = ({
   images,
   favoriteCar,
   onFavorite,
@@ -67,4 +67,4 @@ const SwiperImage = ({
   );
 };
 
-export default SwiperImage;
+export default SliderImage;
