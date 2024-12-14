@@ -1,7 +1,7 @@
 import { ImageClasses } from "@/constants";
 import { Box, IconButton, styled, Theme } from "@mui/material";
 
-export const ImageContainer = styled(Box)({
+export const ImageContainer = styled(Box)(({ theme }: { theme: Theme }) => ({
   display: "flex",
   justifyContent: "center",
   flexDirection: "column",
@@ -12,6 +12,9 @@ export const ImageContainer = styled(Box)({
     width: "100%",
     height: "100%",
     padding: "0 0 10px 0",
+    [theme.breakpoints.down("sm")]: {
+      width: "120px",
+    },
     "&.swiper-no-swiping": {
       padding: 0,
     },
@@ -48,7 +51,7 @@ export const ImageContainer = styled(Box)({
       borderRadius: "30%",
     },
   },
-});
+}));
 
 export const ImageContent = styled(Box)<{ withClickEvent?: boolean }>(
   ({ theme }: { theme: Theme }) => ({

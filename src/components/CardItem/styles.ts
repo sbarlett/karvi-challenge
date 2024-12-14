@@ -1,10 +1,9 @@
 import {
   Box,
   ButtonBase,
-  IconButton,
   styled,
   Theme,
-  Typography,
+  Typography
 } from "@mui/material";
 
 export const Card = styled(Box)(({ theme }: { theme: Theme }) => ({
@@ -133,21 +132,5 @@ export const TextButton = styled(Typography)(({ theme }: { theme: Theme }) => ({
   lineHeight: "20px",
   [theme.breakpoints.down("md")]: {
     fontSize: "12px",
-  },
-}));
-
-export const ButtonFav = styled(IconButton)(({ theme }: { theme: Theme }) => ({
-  position: "absolute",
-  top: 16,
-  right: 16,
-  backgroundColor: "#FFFFFF",
-  padding: "4px",
-  zIndex: 150,
-  borderRadius: "64px",
-  "&:hover": {
-    backgroundColor: "#FFFFFF",
-  },
-  [theme.breakpoints.down("sm")]: {
-    display: "none",
   },
 }));
