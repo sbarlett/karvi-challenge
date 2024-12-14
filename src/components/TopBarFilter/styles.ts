@@ -11,7 +11,7 @@ import {
 export const Container = styled(Box)({
   display: "flex",
   flexDirection: "column",
-  gap: "20px",
+  gap: "10px",
 });
 
 export const Wrapper = styled(Box)(({ theme }: { theme: Theme }) => ({
@@ -75,11 +75,25 @@ export const CatalogContainer = styled(Box)({
   gap: "20px",
 });
 
+export const HeaderSearch = styled(Box)({
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "space-around",
+  width: "100%",
+});
+
 export const HeaderContainer = styled(Box)({
   display: "flex",
   alignItems: "center",
   justifyContent: "space-between",
   width: "100%",
+});
+
+export const ButtonSearch = styled(Button)({
+  fontSize: 14,
+  fontWeight: 700,
+  textTransform: "capitalize",
+  color: "#566DED",
 });
 
 export const Paragraph = styled(Typography)({
