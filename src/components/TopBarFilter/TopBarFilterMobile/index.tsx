@@ -11,12 +11,29 @@ import {
   OrderByContainer,
   Paragraph,
 } from "../styles";
+import { useFormContext } from "react-hook-form";
+import { useCallback, useEffect, useState } from "react";
 
 const TopBarFilterMobile = ({ totalCars }: { totalCars?: number }) => {
-  const handleFilter = (e: any) => {
+  const { setValue } = useFormContext();
+
+  const [searchTerm, setSearchTerm] = useState<string>("");
+
+  const handleFilter = useCallback((e: any) => {
     const value = e.target.value;
-    console.log(value.split(" "), "value");
-  };
+    setSearchTerm(value);
+  }, []);
+
+  useEffect(() => {
+    const delayFilterCars = setTimeout(() => {
+      const filter = searchTerm !== "" ? searchTerm.split(" ") : [];
+      setValue("filters", filter);
+    }, 500);
+
+    return () => {
+      clearTimeout(delayFilterCars);
+    };
+  }, [searchTerm, setValue]);
 
   return (
     <Container>
