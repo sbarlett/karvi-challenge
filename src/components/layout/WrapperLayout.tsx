@@ -2,7 +2,7 @@ import MenuAside from "@/components/MenuAside";
 import TopBarFilter from "@/components/TopBarFilter";
 import { Filters } from "@/models";
 import { Box, styled } from "@mui/material";
-import DrawerNavBar from "../DrawerNavBar";
+import NavBar from "../NavBar";
 
 const WrapperLayout = ({
   availableFilters,
@@ -15,7 +15,7 @@ const WrapperLayout = ({
 }) => {
   return (
     <>
-      <DrawerNavBar />
+      <NavBar />
       <Main>
         <Container>
           <MenuAside filters={availableFilters} />

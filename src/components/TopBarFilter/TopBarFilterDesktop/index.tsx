@@ -18,7 +18,6 @@ import {
   MuiSelect,
   OrderByContainer,
   Paragraph,
-  ParagraphBold,
   TextButton,
   Wrapper,
 } from "../styles";

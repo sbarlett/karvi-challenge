@@ -2,7 +2,7 @@ import { filterOrder, filterTranslations } from "@/constants";
 import { Filters } from "@/models";
 import { capitalizeText } from "@/utils/capitalizeText";
 import { ExpandMore } from "@mui/icons-material";
-import { memo, useState } from "react";
+import { memo, useCallback, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import {
   Container,
@@ -25,14 +25,17 @@ const MenuAside = ({ filters }: { filters: Filters }) => {
       setExpanded(newExpanded ? panel : null);
     };
 
-  const handleSelectFilter = (filter: string) => {
-    const { filters } = getValues();
-    const filterText = filter.toString().toLowerCase();
-    const newFilters = filters.includes(filterText)
-      ? filters
-      : [...filters, filterText];
-    setValue("filters", newFilters);
-  };
+  const handleSelectFilter = useCallback(
+    (filter: string) => {
+      const { filters } = getValues();
+      const filterText = filter.toString().toLowerCase();
+      const newFilters = filters.includes(filterText)
+        ? filters
+        : [...filters, filterText];
+      setValue("filters", newFilters);
+    },
+    [getValues, setValue]
+  );
 
   return (
     <Container>

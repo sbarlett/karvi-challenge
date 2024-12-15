@@ -50,12 +50,14 @@ const useCatalog = (filters: string[], order: string) => {
 
   const dataFiltered = filters.length === 0 ? catalog : filteredData;
 
-  const sortedData = dataFiltered.sort((a, b) => {
-    if (order === "max") return b.price - a.price;
-    if (order === "min") return a.price - b.price;
-    if (order === "relevant") return Number(b.fav) - Number(a.fav);
-    return 0;
-  });
+  const sortedData = useMemo(() => {
+    return dataFiltered.sort((a, b) => {
+      if (order === "max") return b.price - a.price;
+      if (order === "min") return a.price - b.price;
+      if (order === "relevant") return Number(b.fav) - Number(a.fav);
+      return 0;
+    });
+  }, [dataFiltered, order]);
 
   const startIndex = (page - 1) * ITEMS_PER_PAGE;
 
