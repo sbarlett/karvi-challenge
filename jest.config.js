@@ -11,9 +11,4 @@ module.exports = {
     "^components/(.*)$": "<rootDir>/src/components/$1",
     "^utils/(.*)$": "<rootDir>/src/utils/$1",
   },
-  transformIgnorePatterns: ["node_modules/(?!swiper|ssr-window|dom7).*/"],
-  transform: {
-    "^.+\\.(ts|tsx|js)$": "babel-jest",
-    "^.+\\.css$": "jest-transform-css",
-  },
 };
