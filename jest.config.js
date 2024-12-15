@@ -10,5 +10,14 @@ module.exports = {
     "^@/(.*)$": "<rootDir>/src/$1",
     "^components/(.*)$": "<rootDir>/src/components/$1",
     "^utils/(.*)$": "<rootDir>/src/utils/$1",
+    "swiper/css": "identity-obj-proxy",
+    "swiper/css/navigation": "identity-obj-proxy",
+    "swiper/css/pagination": "identity-obj-proxy",
   },
+  transform: {
+    '^.+\\.(js|jsx|ts|tsx|mjs)$': 'babel-jest',
+  },
+  transformIgnorePatterns: [
+    '/node_modules/(?!swiper|ssr-window|dom7).+\\.js$'
+  ],
 };

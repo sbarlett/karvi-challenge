@@ -46,23 +46,26 @@ const SliderImage = ({
           bulletClass: ImageClasses.bullet,
           bulletActiveClass: ImageClasses.bulletActive,
         }}
+        data-testid="swiper-testid"
         style={{ position: "relative" }}
       >
         {images.map((img) => (
-          <SwiperSlide key={img.id}>
+          <SwiperSlide key={img.id} data-testid="swiper-slide-testid">
             <ImageContent viewCard={viewCard}>
               <img src={img.image_url} alt={`Image ${img.id}`} />
             </ImageContent>
           </SwiperSlide>
         ))}
         <div className={ImageClasses.pagination} />
-        <ButtonFav onClick={onFavorite}>
-          {favoriteCar ? (
+        {favoriteCar ? (
+          <ButtonFav onClick={onFavorite} data-testid="icon-heart-liked">
             <FavoriteIcon sx={{ color: "red", fontSize: 20 }} />
-          ) : (
+          </ButtonFav>
+        ) : (
+          <ButtonFav onClick={onFavorite} data-testid="icon-heart-empty">
             <IconHeart />
-          )}
-        </ButtonFav>
+          </ButtonFav>
+        )}
       </Swiper>
     </ImageContainer>
   );
