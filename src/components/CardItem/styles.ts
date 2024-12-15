@@ -3,39 +3,58 @@ import {
   ButtonBase,
   styled,
   Theme,
-  Typography
+  Typography,
+  useTheme,
 } from "@mui/material";
 
-export const Card = styled(Box)(({ theme }: { theme: Theme }) => ({
-  display: "flex",
-  width: "100%",
-  height: "100%",
-  padding: "8px",
-  flexDirection: "column",
-  borderRadius: "12px",
-  backgroundColor: "#FFFFFF",
-  position: "relative",
-  [theme.breakpoints.down("sm")]: {
-    position: "unset",
-    flexDirection: "row",
-    boxShadow: "none",
-    padding: "0px",
-  },
-  boxShadow:
-    "0px 20px 25px 0px rgba(0, 0, 0, 0.09), 0px 1px 10px 0px rgba(0, 0, 0, 0.07)",
-}));
+export const Card = styled(Box)(({
+  viewCard,
+}: {
+  viewCard: "grid" | "list";
+}) => {
+  const theme = useTheme();
+  return {
+    display: "flex",
+    width: "100%",
+    height: "100%",
+    padding: "8px",
+    flexDirection: "column",
+    borderRadius: "12px",
+    backgroundColor: "#FFFFFF",
+    position: "relative",
+    overflow: "hidden",
+    [theme.breakpoints.down("sm")]: {
+      position: "unset",
+      flexDirection: viewCard === "grid" ? "colum" : "row",
+      boxShadow:
+        viewCard === "grid"
+          ? "0px 20px 25px 0px rgba(0, 0, 0, 0.09), 0px 1px 10px 0px rgba(0, 0, 0, 0.07)"
+          : "none",
+      padding: viewCard === "grid" ? "8px" : "0px",
+    },
+    boxShadow:
+      "0px 20px 25px 0px rgba(0, 0, 0, 0.09), 0px 1px 10px 0px rgba(0, 0, 0, 0.07)",
+  };
+});
 
-export const Content = styled(Box)(({ theme }: { theme: Theme }) => ({
-  display: "flex",
-  padding: "12px 8px 8px 8px",
-  flexDirection: "column",
-  alignItems: "flex-start",
-  gap: "8px",
-  [theme.breakpoints.down("sm")]: {
-    gap: "0px",
-    padding: "0px 8px",
-  },
-}));
+export const Content = styled(Box)(({
+  viewCard,
+}: {
+  viewCard: "grid" | "list";
+}) => {
+  const theme = useTheme();
+  return {
+    display: "flex",
+    padding: "12px 8px 8px 8px",
+    flexDirection: "column",
+    alignItems: "flex-start",
+    gap: "8px",
+    [theme.breakpoints.down("sm")]: {
+      gap: viewCard === "grid" ? "8px" : "0px",
+      padding: viewCard === "grid" ? "12px 8px 8px 8px" : "0px 8px",
+    },
+  };
+});
 
 export const WrapperBadge = styled(Box)({
   display: "flex",
@@ -61,16 +80,23 @@ export const BadgeText = styled(Box)({
   whiteSpace: "nowrap",
 });
 
-export const Container = styled(Box)(({ theme }: { theme: Theme }) => ({
-  display: "flex",
-  flexDirection: "column",
-  [theme.breakpoints.down("sm")]: {
-    alignItems: "center",
-    justifyContent: "center ",
-    flexDirection: "row",
-    gap: "8px",
-  },
-}));
+export const Container = styled(Box)(({
+  viewCard,
+}: {
+  viewCard: "grid" | "list";
+}) => {
+  const theme = useTheme();
+  return {
+    display: "flex",
+    flexDirection: "column",
+    [theme.breakpoints.down("sm")]: {
+      alignItems: viewCard === "grid" ? "flex-start" : "center",
+      justifyContent: "center",
+      flexDirection: viewCard === "grid" ? "column" : "row",
+      gap: viewCard === "grid" ? "0px" : "8px",
+    },
+  };
+});
 
 export const Title = styled(Typography)({
   color: "#1B2141",
@@ -85,7 +111,7 @@ export const Description = styled(Typography)({
   color: "#1B2141",
   fontSize: "16px",
   fontStyle: "normal",
-  fontWeight: 700,
+  fontWeight: 500,
   lineHeight: "24px",
   whiteSpace: "nowrap",
 });
@@ -106,15 +132,22 @@ export const CityText = styled(Typography)({
   lineHeight: "20px",
 });
 
-export const MuiButton = styled(ButtonBase)(({ theme }: { theme: Theme }) => ({
-  height: "44px",
-  borderRadius: "50px",
-  background: "#566DED",
-  width: "100%",
-  [theme.breakpoints.down("sm")]: {
-    display: "none",
-  },
-}));
+export const MuiButton = styled(ButtonBase)(({
+  viewCard,
+}: {
+  viewCard: "grid" | "list";
+}) => {
+  const theme = useTheme();
+  return {
+    height: "44px",
+    borderRadius: "50px",
+    background: "#566DED",
+    width: "100%",
+    [theme.breakpoints.down("sm")]: {
+      display: viewCard === "grid" ? "flex" : "none",
+    },
+  };
+});
 
 export const Wrapper = styled(Box)({
   display: "flex",

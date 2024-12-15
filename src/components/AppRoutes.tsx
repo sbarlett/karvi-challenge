@@ -10,6 +10,7 @@ function AppRoutes() {
     defaultValues: {
       filters: [],
       order: "max",
+      view: "grid",
     },
   });
   return (

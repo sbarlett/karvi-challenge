@@ -58,7 +58,6 @@ const TopBarFilterDesktop = ({
       <HeaderContainer>
         <Paragraph>{formatNumber(totalCars)} carros encontrados</Paragraph>
         <OrderByContainer>
-          <ParagraphBold>Ordenar por</ParagraphBold>
           <Box>
             <Controller
               control={control}

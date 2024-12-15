@@ -1,60 +1,74 @@
 import { ImageClasses } from "@/constants";
-import { Box, IconButton, styled, Theme } from "@mui/material";
+import { Box, IconButton, styled, useTheme } from "@mui/material";
 
-export const ImageContainer = styled(Box)(({ theme }: { theme: Theme }) => ({
-  display: "flex",
-  justifyContent: "center",
-  flexDirection: "column",
-  alignItems: "baseline",
-  minHeight: 100,
-  minWidth: 120,
-  [`& .${ImageClasses.wrapper}`]: {
-    width: "100%",
-    height: "100%",
-    padding: "0 0 10px 0",
-    [theme.breakpoints.down("sm")]: {
-      width: "120px",
-    },
-    "&.swiper-no-swiping": {
-      padding: 0,
-    },
-  },
-  [`& .${ImageClasses.pagination}`]: {
+export const ImageContainer = styled(Box)(({
+  viewCard,
+}: {
+  viewCard: "grid" | "list";
+}) => {
+  const theme = useTheme();
+  const widthCard = viewCard === "grid" ? "100%" : "120px";
+  return {
     display: "flex",
-    width: "100%",
     justifyContent: "center",
-    textAlign: "center",
-    paddingTop: "2px",
-    transition: "0.3s opacity ease",
-    transform: "translate3d(0, 0, 0)",
-    position: "absolute",
-    bottom: "20px",
-    zIndex: 150,
-    "&.swiper-pagination-lock": {
-      display: "none",
+    flexDirection: "column",
+    alignItems: "baseline",
+    minHeight: 100,
+    minWidth: widthCard,
+    [`& .${ImageClasses.wrapper}`]: {
+      width: "100%",
+      height: "100%",
+      padding: "0px",
+      [theme.breakpoints.down("sm")]: {
+        width: widthCard,
+      },
+      "&.swiper-no-swiping": {
+        padding: 0,
+      },
     },
-    [`& .${ImageClasses.bullet}`]: {
-      width: "8px",
-      height: "8px",
-      backgroundColor: "#FFFFFF",
-      opacity: 0.5,
-      transition: "background-color 0.3s ease",
-      borderRadius: "50%",
-      display: "inline-block",
-      margin: "0 4px",
+    [`& .${ImageClasses.pagination}`]: {
+      display: "flex",
+      width: "100%",
+      justifyContent: "center",
+      textAlign: "center",
+      paddingTop: "2px",
+      transition: "0.3s opacity ease",
+      transform: "translate3d(0, 0, 0)",
+      position: "absolute",
+      bottom: "8px",
+      zIndex: 150,
+      "&.swiper-pagination-lock": {
+        display: "none",
+      },
+      [`& .${ImageClasses.bullet}`]: {
+        width: "8px",
+        height: "8px",
+        backgroundColor: "#FFFFFF",
+        opacity: 0.5,
+        transition: "background-color 0.3s ease",
+        borderRadius: "50%",
+        display: "inline-block",
+        margin: "0 4px",
+      },
+      [`& .${ImageClasses.bulletActive}`]: {
+        backgroundColor: "#FFFFFF",
+        opacity: 1,
+        width: "16px",
+        height: "8px",
+        borderRadius: "30%",
+      },
     },
-    [`& .${ImageClasses.bulletActive}`]: {
-      backgroundColor: "#FFFFFF",
-      opacity: 1,
-      width: "16px",
-      height: "8px",
-      borderRadius: "30%",
-    },
-  },
-}));
+  };
+});
 
-export const ImageContent = styled(Box)<{ withClickEvent?: boolean }>(
-  ({ theme }: { theme: Theme }) => ({
+export const ImageContent = styled(Box)<{
+  withClickEvent?: boolean;
+  viewCard: "grid" | "list";
+}>(({ viewCard }) => {
+  const theme = useTheme();
+  const widthCard = viewCard === "grid" ? "100%" : "120px";
+  const heightCard = viewCard === "grid" ? "100%" : "100px";
+  return {
     cursor: "pointer",
     display: "flex",
     position: "relative",
@@ -64,13 +78,13 @@ export const ImageContent = styled(Box)<{ withClickEvent?: boolean }>(
       borderRadius: "12px",
       objectFit: "cover",
       [theme.breakpoints.down("sm")]: {
-        width: "120px",
-        height: "100px",
+        width: widthCard,
+        height: heightCard,
         objectFit: "contain",
       },
     },
-  })
-);
+  };
+});
 
 export const ButtonFav = styled(IconButton)({
   position: "absolute",

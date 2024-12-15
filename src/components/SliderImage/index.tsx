@@ -19,10 +19,12 @@ const SliderImage = ({
   images,
   favoriteCar,
   onFavorite,
+  viewCard,
 }: {
   images: Image[];
   favoriteCar: boolean;
   onFavorite: () => void;
+  viewCard: "grid" | "list";
 }) => {
   if (!images.length) {
     return null;
@@ -31,7 +33,7 @@ const SliderImage = ({
   const isOne = images.length === 1;
 
   return (
-    <ImageContainer className={ImageClasses.root}>
+    <ImageContainer className={ImageClasses.root} viewCard={viewCard}>
       <Swiper
         modules={[Autoplay, Pagination, Navigation]}
         className={clsx(ImageClasses.wrapper, {
@@ -49,7 +51,7 @@ const SliderImage = ({
       >
         {images.map((img) => (
           <SwiperSlide key={img.id}>
-            <ImageContent>
+            <ImageContent viewCard={viewCard}>
               <img src={img.image_url} alt={`Image ${img.id}`} />
             </ImageContent>
           </SwiperSlide>

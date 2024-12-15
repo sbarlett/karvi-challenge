@@ -13,9 +13,11 @@ import {
 } from "../styles";
 import { useFormContext } from "react-hook-form";
 import { useCallback, useEffect, useState } from "react";
-
+import IconList from "@mui/icons-material/ViewAgendaOutlined";
 const TopBarFilterMobile = ({ totalCars }: { totalCars?: number }) => {
-  const { setValue } = useFormContext();
+  const { setValue, watch } = useFormContext();
+
+  const view = watch("view");
 
   const [searchTerm, setSearchTerm] = useState<string>("");
 
@@ -35,6 +37,14 @@ const TopBarFilterMobile = ({ totalCars }: { totalCars?: number }) => {
     };
   }, [searchTerm, setValue]);
 
+  const handleViewGrid = () => {
+    setValue("view", "grid");
+  };
+
+  const handleViewList = () => {
+    setValue("view", "list");
+  };
+
   return (
     <Container>
       <HeaderSearch>
@@ -48,9 +58,15 @@ const TopBarFilterMobile = ({ totalCars }: { totalCars?: number }) => {
       <HeaderContainer>
         <Paragraph>{formatNumber(totalCars)} resultados</Paragraph>
         <OrderByContainer>
-          <IconButton>
-            <IconViewGrid />
-          </IconButton>
+          {view === "grid" ? (
+            <IconButton onClick={handleViewList}>
+              <IconList sx={{ color: "rgba(0, 0, 0, 0.54)" }} />
+            </IconButton>
+          ) : (
+            <IconButton onClick={handleViewGrid}>
+              <IconViewGrid />
+            </IconButton>
+          )}
         </OrderByContainer>
       </HeaderContainer>
     </Container>
