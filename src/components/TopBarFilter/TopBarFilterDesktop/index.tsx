@@ -21,6 +21,7 @@ import {
   TextButton,
   Wrapper,
 } from "../styles";
+import { useCatalogContext } from "@/context/CatalogContext";
 
 const TopBarFilterDesktop = ({
   filtersActive,
@@ -34,6 +35,7 @@ const TopBarFilterDesktop = ({
   totalCars?: number;
 }) => {
   const { control } = useFormContext();
+  const { setPage } = useCatalogContext();
   return (
     <Container>
       <Wrapper>
@@ -67,6 +69,7 @@ const TopBarFilterDesktop = ({
                   value={field.value}
                   onChange={(e) => {
                     field.onChange(e);
+                    setPage(1);
                   }}
                   IconComponent={ExpandMore}
                   displayEmpty

@@ -66,8 +66,14 @@ const useCatalog = (filters: string[], order: string) => {
     startIndex + ITEMS_PER_PAGE
   );
 
+  const catalogFavorite = useMemo(
+    () => catalog.filter((car) => car.fav === true),
+    [data]
+  );
+
   return {
     data: paginatedData as CatalogCars[],
+    dataFavorites: catalogFavorite,
     pagination: {
       totalPages: Math.ceil(sortedData.length / ITEMS_PER_PAGE) || 0,
       totalItems: sortedData.length || 0,

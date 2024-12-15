@@ -1,6 +1,6 @@
 import useCatalog from "@/hook/useCatalog";
 import { CatalogCars, Filters } from "@/models";
-import React, { createContext, ReactNode, useContext, useMemo } from "react";
+import React, { createContext, ReactNode, useContext } from "react";
 import { useFormContext } from "react-hook-form";
 
 interface CatalogContextProps {
@@ -14,6 +14,7 @@ interface CatalogContextProps {
   };
   availableFilters: Filters;
   toggleFavorite: (id: number) => void;
+  setPage: (page: number) => void;
 }
 
 const CatalogContext = createContext<CatalogContextProps | undefined>(
@@ -28,24 +29,18 @@ export const CatalogProvider: React.FC<{ children: ReactNode }> = ({
   const filters = watch("filters");
   const order = watch("order");
 
-  const { data, pagination, availableFilters, toggleFavorite } = useCatalog(
-    filters,
-    order
-  );
-
-  const catalogFavorite = useMemo(
-    () => data.filter((car) => car.fav === true),
-    [data]
-  );
+  const { data, pagination, availableFilters, toggleFavorite, dataFavorites } =
+    useCatalog(filters, order);
 
   return (
     <CatalogContext.Provider
       value={{
         data,
-        dataFavorites: catalogFavorite,
+        dataFavorites: dataFavorites,
         pagination,
         availableFilters,
         toggleFavorite,
+        setPage: pagination.setPage,
       }}
     >
       {children}
