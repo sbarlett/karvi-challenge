@@ -1,3 +1,4 @@
+import React from "react";
 import { filterOrder, filterTranslations } from "@/constants";
 import { Filters } from "@/models";
 import { capitalizeText } from "@/utils/capitalizeText";
