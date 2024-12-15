@@ -5,6 +5,11 @@ interface FilterOption {
   brand?: string;
 }
 
+export interface Image {
+  id: number;
+  image_url: string;
+}
+
 export interface CatalogCars {
   id: number;
   city: string;
@@ -15,6 +20,7 @@ export interface CatalogCars {
   price: number;
   mileage: number;
   fav: boolean;
+  images: Image[];
 }
 
 export interface Data {
@@ -25,7 +31,6 @@ export interface Data {
   totalCount: number;
   totalPages: number;
 }
-
 
 export interface Filters {
   year: FilterOption[];

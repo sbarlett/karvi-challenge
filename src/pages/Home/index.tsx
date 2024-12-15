@@ -5,8 +5,12 @@ import { useCatalogContext } from "@/context/CatalogContext";
 const Home = () => {
   const { data, pagination, availableFilters, toggleFavorite } =
     useCatalogContext();
+
   return (
-    <WrapperLayout availableFilters={availableFilters} totalCars={pagination.totalItems}>
+    <WrapperLayout
+      availableFilters={availableFilters}
+      totalCars={pagination.totalItems}
+    >
       <Catalog
         data={data}
         pagination={pagination}

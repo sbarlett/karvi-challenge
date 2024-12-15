@@ -1,4 +1,4 @@
-export const mockData = {
+export const mockCarsCatalog = {
   availableFilters: {
     year: [
       {
@@ -473,3 +473,11 @@ export const mockData = {
   totalCount: 30,
   totalPages: 12,
 };
+
+
+export const mockListImageCar = [
+  { id: 1, image_url: "/car.png" },
+  { id: 2, image_url: "/car.png" },
+  { id: 3, image_url: "/car.png" },
+  { id: 4, image_url: "/car.png" },
+];

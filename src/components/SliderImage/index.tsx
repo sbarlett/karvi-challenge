@@ -9,11 +9,9 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import { IconHeart } from "../assets";
 import { ButtonFav, ImageContainer, ImageContent } from "./styles";
+import { Image } from "@/models";
 
-export interface Image {
-  id: number;
-  image_url: string;
-}
+
 
 const SliderImage = ({
   images,

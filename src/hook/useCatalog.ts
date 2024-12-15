@@ -1,16 +1,21 @@
 import { ITEMS_PER_PAGE } from "@/constants";
-import { mockData } from "@/mock/mockData";
+import { mockListImageCar, mockCarsCatalog } from "@/mock";
 import { CatalogCars } from "@/models";
 import { useCallback, useEffect, useMemo, useState } from "react";
 
 const useCatalog = (filters: string[], order: string) => {
   const [page, setPage] = useState<number>(1);
 
-  const data = mockData.items;
+  const data = mockCarsCatalog.items;
+  const imagesList = mockListImageCar;
 
   const adapterData = useMemo(() => {
-    return data.map((car) => ({ ...car, fav: false }));
-  }, [data]);
+    return data.map((car) => ({
+      ...car,
+      fav: false,
+      images: imagesList || [],
+    }));
+  }, [data, imagesList]);
 
   const [catalog, setCatalog] = useState<CatalogCars[]>(() => {
     const storage = localStorage.getItem("catalog");
@@ -80,7 +85,7 @@ const useCatalog = (filters: string[], order: string) => {
       page,
       setPage,
     },
-    availableFilters: mockData.availableFilters,
+    availableFilters: mockCarsCatalog.availableFilters,
     toggleFavorite,
   };
 };

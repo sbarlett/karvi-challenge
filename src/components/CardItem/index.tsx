@@ -1,4 +1,3 @@
-import { listImageCar } from "@/constants";
 import { CatalogCars } from "@/models";
 import { capitalizeText } from "@/utils/capitalizeText";
 import { formatNumber } from "@/utils/formatNumber";
@@ -26,11 +25,12 @@ const CardItem = ({
   onFavorite: () => void;
   viewCard: "grid" | "list";
 }) => {
-  const { brand, model, year, mileage, price, city, version, fav } = carData;
+  const { brand, model, year, mileage, price, city, version, fav, images } =
+    carData;
   return (
     <Card viewCard={viewCard}>
       <SliderImage
-        images={listImageCar}
+        images={images}
         favoriteCar={fav}
         onFavorite={onFavorite}
         viewCard={viewCard}

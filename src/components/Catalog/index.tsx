@@ -21,7 +21,7 @@ const Catalog = ({
   const view = watch("view");
   const location = useLocation();
   const isFavoritePage = location.pathname === routes.favorite.path;
-
+  
   return (
     <CatalogContainer>
       <GridContainer viewCard={view}>

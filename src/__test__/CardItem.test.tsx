@@ -16,21 +16,33 @@ jest.mock("swiper/modules", () => ({
 
 const onFavorite = jest.fn();
 
+const mockCar = {
+  id: 1,
+  city: "São Paulo",
+  year: 2024,
+  brand: "CHEVROLET",
+  model: "ONIX",
+  version: "1.0 LT MANUAL",
+  price: 85000,
+  mileage: 5000,
+  fav: true,
+  images: [
+    {
+      id: 1,
+      image_url: "image_url",
+    },
+    {
+      id: 2,
+      image_url: "image_url",
+    },
+  ],
+};
+
 describe("CardItem", () => {
   it("should render card", () => {
     const { getByText, getByRole, getByTestId } = render(
       <CardItem
-        carData={{
-          id: 1,
-          city: "São Paulo",
-          year: 2024,
-          brand: "CHEVROLET",
-          model: "ONIX",
-          version: "1.0 LT MANUAL",
-          price: 85000,
-          mileage: 5000,
-          fav: false,
-        }}
+        carData={{ ...mockCar, fav: false }}
         onFavorite={onFavorite}
         viewCard="grid"
       />
@@ -44,7 +56,7 @@ describe("CardItem", () => {
     const emptyFav = getByTestId("icon-heart-empty");
     const button = getByRole("button", { name: /Simular parcelas/i });
 
-    fireEvent.click(emptyFav)
+    fireEvent.click(emptyFav);
 
     expect(title).toBeInTheDocument();
     expect(version).toBeInTheDocument();
@@ -54,31 +66,26 @@ describe("CardItem", () => {
     expect(city).toBeInTheDocument();
     expect(button).toBeInTheDocument();
     expect(emptyFav).toBeInTheDocument();
-    expect(onFavorite).toHaveBeenCalledTimes(1)
+    expect(onFavorite).toHaveBeenCalledTimes(1);
   });
 
   it("should render favorite icon", async () => {
     const { getByTestId, queryByTestId } = render(
-      <CardItem
-        carData={{
-          id: 1,
-          city: "São Paulo",
-          year: 2024,
-          brand: "CHEVROLET",
-          model: "ONIX",
-          version: "1.0 LT MANUAL",
-          price: 85000,
-          mileage: 5000,
-          fav: true,
-        }}
-        onFavorite={onFavorite}
-        viewCard="grid"
-      />
+      <CardItem carData={mockCar} onFavorite={onFavorite} viewCard="grid" />
     );
     const icon = queryByTestId("icon-heart-empty");
     expect(icon).not.toBeInTheDocument();
 
     const iconLiked = getByTestId("icon-heart-liked");
     expect(iconLiked).toBeInTheDocument();
+  });
+
+  it("should render images correctly", () => {
+    const { getAllByTestId } = render(
+      <CardItem carData={mockCar} onFavorite={onFavorite} viewCard="grid" />
+    );
+
+    const images = getAllByTestId("swiper-slide-testid");
+    expect(images.length).toBe(2);
   });
 });
