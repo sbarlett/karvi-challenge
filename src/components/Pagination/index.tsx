@@ -1,4 +1,4 @@
-import { useCallback } from "react";
+import { useCallback, useEffect } from "react";
 import { IconArrowLeft, IconArrowRight } from "../assets";
 import {
   CenterBox,
@@ -37,6 +37,14 @@ const Pagination = ({
     [setPage]
   );
 
+  useEffect(() => {
+		window.scrollTo({
+			left: 0,
+			behavior: "auto",
+			top: 0,
+		});
+	}, [page]);
+  
   return (
     <PaginationContainer>
       <PaginationButton

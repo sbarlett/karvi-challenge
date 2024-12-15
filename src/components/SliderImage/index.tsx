@@ -31,7 +31,6 @@ const SliderImage = ({
   }
 
   const isOne = images.length === 1;
-
   return (
     <ImageContainer className={ImageClasses.root} viewCard={viewCard}>
       <Swiper
