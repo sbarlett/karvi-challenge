@@ -15,8 +15,10 @@ import {
   Paragraph,
 } from "../styles";
 import { FormValues } from "@/schema";
+import { useCatalogContext } from "@/context/CatalogContext";
 
 const TopBarFilterMobile = ({ totalCars }: { totalCars?: number }) => {
+  const { setPage } = useCatalogContext();
   const { setValue, watch } = useFormContext<FormValues>();
 
   const view = watch("view");
@@ -39,6 +41,7 @@ const TopBarFilterMobile = ({ totalCars }: { totalCars?: number }) => {
   const handleSearch = useCallback(() => {
     const filter = searchTerm !== "" ? searchTerm.split(" ") : [];
     setValue("filters", filter);
+    setPage(1);
   }, [searchTerm]);
 
   return (
