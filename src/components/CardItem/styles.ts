@@ -98,24 +98,36 @@ export const Container = styled(Box)(({
   };
 });
 
-export const Title = styled(Typography)({
-  color: "#1B2141",
-  fontSize: "16px",
-  fontStyle: "normal",
-  fontWeight: 700,
-  lineHeight: "24px",
-  whiteSpace: "nowrap",
-  textTransform: "capitalize",
+export const Title = styled(Typography)(() => {
+  const theme = useTheme();
+  return {
+    color: "#1B2141",
+    fontSize: "16px",
+    fontStyle: "normal",
+    fontWeight: 700,
+    lineHeight: "24px",
+    whiteSpace: "nowrap",
+    textTransform: "capitalize",
+    [theme.breakpoints.down("sm")]: {
+      fontSize: "14px",
+    },
+  };
 });
 
-export const Description = styled(Typography)({
-  color: "#1B2141",
-  fontSize: "16px",
-  fontStyle: "normal",
-  fontWeight: 500,
-  lineHeight: "24px",
-  whiteSpace: "nowrap",
-  textTransform: "capitalize",
+export const Description = styled(Typography)(() => {
+  const theme = useTheme();
+  return {
+    color: "#1B2141",
+    fontSize: "16px",
+    fontStyle: "normal",
+    fontWeight: 500,
+    lineHeight: "24px",
+    whiteSpace: "nowrap",
+    textTransform: "capitalize",
+    [theme.breakpoints.down("sm")]: {
+      fontSize: "14px",
+    },
+  };
 });
 
 export const PriceText = styled(Typography)({
