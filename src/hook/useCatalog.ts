@@ -1,13 +1,14 @@
 import { ITEMS_PER_PAGE } from "@/constants";
-import { mockListImageCar, mockCarsCatalog } from "@/mock";
+import { listImageCar, mockCarsCatalog } from "@/mock";
 import { CatalogCars } from "@/models";
+import { getFilterWithCount } from "@/utils/getFilterWithCount";
 import { useCallback, useEffect, useMemo, useState } from "react";
 
 const useCatalog = (filters: string[], order: string) => {
   const [page, setPage] = useState<number>(1);
 
   const data = mockCarsCatalog.items;
-  const imagesList = mockListImageCar;
+  const imagesList = listImageCar;
 
   const adapterData = useMemo(() => {
     return data.map((car) => ({
@@ -76,6 +77,13 @@ const useCatalog = (filters: string[], order: string) => {
     [data]
   );
 
+  const adapterAvailableFilters = useMemo(() => {
+    return getFilterWithCount({
+      filters: mockCarsCatalog.availableFilters,
+      items: mockCarsCatalog.items,
+    });
+  }, [mockCarsCatalog.availableFilters, mockCarsCatalog.items]);
+
   return {
     data: paginatedData as CatalogCars[],
     dataFavorites: catalogFavorite,
@@ -85,7 +93,7 @@ const useCatalog = (filters: string[], order: string) => {
       page,
       setPage,
     },
-    availableFilters: mockCarsCatalog.availableFilters,
+    availableFilters: adapterAvailableFilters,
     toggleFavorite,
   };
 };

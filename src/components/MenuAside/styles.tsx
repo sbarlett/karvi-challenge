@@ -85,4 +85,7 @@ export const TextFilters = styled(Typography)({
     textDecoration: "underline",
     textUnderlineOffset: "3px",
   },
+  span: {
+    color: "#87899C",
+  },
 });

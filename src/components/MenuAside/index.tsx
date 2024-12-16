@@ -12,7 +12,7 @@ import {
   Container,
   TextButton,
   TextFilters,
-  Wrapper,
+  Wrapper
 } from "./styles";
 
 const MenuAside = ({ filters }: { filters: Filters }) => {
@@ -61,7 +61,10 @@ const MenuAside = ({ filters }: { filters: Filters }) => {
                   key={opt.name}
                   onClick={() => handleSelectFilter(opt.name)}
                 >
-                  <TextFilters>{opt?.name}</TextFilters>
+                  <TextFilters>
+                    {opt?.name}
+                    <span>{` (${opt?.count})`}</span>
+                  </TextFilters>
                 </ButtonFilter>
               ))}
             </Wrapper>

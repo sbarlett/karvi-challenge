@@ -1,4 +1,4 @@
-interface FilterOption {
+export interface FilterOption {
   id: number | string;
   name: string | number;
   slug?: string;
@@ -19,8 +19,8 @@ export interface CatalogCars {
   version: string;
   price: number;
   mileage: number;
-  fav: boolean;
-  images: Image[];
+  fav?: boolean;
+  images?: Image[];
 }
 
 export interface Data {
