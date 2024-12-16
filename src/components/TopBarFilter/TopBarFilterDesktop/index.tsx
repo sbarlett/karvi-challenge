@@ -1,7 +1,6 @@
 import { selectOptions } from "@/constants";
 import { useCatalogContext } from "@/context/CatalogContext";
 import { FormValues } from "@/schema";
-import { capitalizeText } from "@/utils/capitalizeText";
 import { formatNumber } from "@/utils/formatNumber";
 import { Close, ExpandMore } from "@mui/icons-material";
 import { Box } from "@mui/material";
@@ -47,7 +46,7 @@ const TopBarFilterDesktop = ({
               onClick={() => onDeleteFilter(filter)}
               endIcon={<Close sx={{ color: "#B4BEF5" }} />}
             >
-              <FilterText>{capitalizeText(filter)}</FilterText>
+              <FilterText>{filter}</FilterText>
             </FilterButton>
           ))}
         </FiltersContainer>

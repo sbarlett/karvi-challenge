@@ -1,7 +1,6 @@
 import { filterOrder, filterTranslations } from "@/constants";
 import { Filters } from "@/models";
 import { FormValues } from "@/schema";
-import { capitalizeText } from "@/utils/capitalizeText";
 import { ExpandMore } from "@mui/icons-material";
 import React, { memo, useCallback, useState } from "react";
 import { useFormContext } from "react-hook-form";
@@ -62,7 +61,7 @@ const MenuAside = ({ filters }: { filters: Filters }) => {
                   key={opt.name}
                   onClick={() => handleSelectFilter(opt.name)}
                 >
-                  <TextFilters>{capitalizeText(opt?.name)} </TextFilters>
+                  <TextFilters>{opt?.name}</TextFilters>
                 </ButtonFilter>
               ))}
             </Wrapper>

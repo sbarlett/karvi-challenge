@@ -1,5 +1,4 @@
 import { CatalogCars } from "@/models";
-import { capitalizeText } from "@/utils/capitalizeText";
 import { formatNumber } from "@/utils/formatNumber";
 import { Box } from "@mui/material";
 import SliderImage from "../SliderImage";
@@ -42,8 +41,8 @@ const CardItem = ({
             {mileage && <Badge value={`${formatNumber(mileage)} km`} />}
           </WrapperBadge>
           <Container viewCard={viewCard}>
-            <Title>{`${capitalizeText(brand)} ${capitalizeText(model)}`}</Title>
-            <Description>{capitalizeText(version)}</Description>
+            <Title>{`${brand} ${model}`}</Title>
+            <Description>{version}</Description>
           </Container>
         </Box>
         <Box>

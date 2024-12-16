@@ -105,6 +105,7 @@ export const Title = styled(Typography)({
   fontWeight: 700,
   lineHeight: "24px",
   whiteSpace: "nowrap",
+  textTransform: "capitalize",
 });
 
 export const Description = styled(Typography)({
@@ -114,6 +115,7 @@ export const Description = styled(Typography)({
   fontWeight: 500,
   lineHeight: "24px",
   whiteSpace: "nowrap",
+  textTransform: "capitalize",
 });
 
 export const PriceText = styled(Typography)({
