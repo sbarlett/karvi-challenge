@@ -74,7 +74,7 @@ const useCatalog = (filters: string[], order: string) => {
 
   const catalogFavorite = useMemo(
     () => catalog.filter((car) => car.fav === true),
-    [data]
+    [catalog]
   );
 
   const adapterAvailableFilters = useMemo(() => {
