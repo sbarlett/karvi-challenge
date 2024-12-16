@@ -51,7 +51,7 @@ export const Content = styled(Box)(({
     gap: "8px",
     [theme.breakpoints.down("sm")]: {
       gap: viewCard === "grid" ? "8px" : "0px",
-      padding: viewCard === "grid" ? "12px 8px 8px 8px" : "0px 8px",
+      padding: viewCard === "grid" ? "12px 0px 8px 0px" : "0px 8px",
     },
   };
 });

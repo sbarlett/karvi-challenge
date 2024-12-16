@@ -36,7 +36,7 @@ const Main = styled(Box)(({ theme }) => ({
   padding: "60px 42px 30px 37px",
   backgroundColor: "#FFFFFF",
   [theme.breakpoints.down("sm")]: {
-    padding: "20px",
+    padding: "20px 20px 30px 20px",
   },
 }));
 
