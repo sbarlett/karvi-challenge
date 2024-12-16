@@ -6,6 +6,7 @@ import { CatalogContainer, GridContainer, MuiDivider } from "./styles";
 import { useLocation } from "react-router-dom";
 import { routes } from "@/utils/routes";
 import { useFormContext } from "react-hook-form";
+import { FormValues } from "@/schema";
 
 const Catalog = ({
   data,
@@ -17,7 +18,7 @@ const Catalog = ({
   onFavorite: (id: number) => void;
 }) => {
   const { page, totalPages, setPage } = pagination;
-  const { watch } = useFormContext();
+  const { watch } = useFormContext<FormValues>();
   const view = watch("view");
   const location = useLocation();
   const isFavoritePage = location.pathname === routes.favorite.path;

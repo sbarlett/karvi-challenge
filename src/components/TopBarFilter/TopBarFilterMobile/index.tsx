@@ -1,7 +1,10 @@
 import IconFilter from "@/components/assets/IconFilter";
 import InputSearch from "@/components/Inputs/InputSearch";
 import { formatNumber } from "@/utils/formatNumber";
+import IconList from "@mui/icons-material/ViewAgendaOutlined";
 import { IconButton } from "@mui/material";
+import { useCallback, useState } from "react";
+import { useFormContext } from "react-hook-form";
 import { IconViewGrid } from "../../assets";
 import {
   ButtonSearch,
@@ -11,11 +14,10 @@ import {
   OrderByContainer,
   Paragraph,
 } from "../styles";
-import { useFormContext } from "react-hook-form";
-import { useCallback, useEffect, useState } from "react";
-import IconList from "@mui/icons-material/ViewAgendaOutlined";
+import { FormValues } from "@/schema";
+
 const TopBarFilterMobile = ({ totalCars }: { totalCars?: number }) => {
-  const { setValue, watch } = useFormContext();
+  const { setValue, watch } = useFormContext<FormValues>();
 
   const view = watch("view");
 
@@ -26,17 +28,6 @@ const TopBarFilterMobile = ({ totalCars }: { totalCars?: number }) => {
     setSearchTerm(value);
   }, []);
 
-  useEffect(() => {
-    const delayFilterCars = setTimeout(() => {
-      const filter = searchTerm !== "" ? searchTerm.split(" ") : [];
-      setValue("filters", filter);
-    }, 500);
-
-    return () => {
-      clearTimeout(delayFilterCars);
-    };
-  }, [searchTerm, setValue]);
-
   const handleViewGrid = () => {
     setValue("view", "grid");
   };
@@ -44,6 +35,11 @@ const TopBarFilterMobile = ({ totalCars }: { totalCars?: number }) => {
   const handleViewList = () => {
     setValue("view", "list");
   };
+
+  const handleSearch = useCallback(() => {
+    const filter = searchTerm !== "" ? searchTerm.split(" ") : [];
+    setValue("filters", filter);
+  }, [searchTerm]);
 
   return (
     <Container>
@@ -53,7 +49,9 @@ const TopBarFilterMobile = ({ totalCars }: { totalCars?: number }) => {
           placeholder="Buscar"
           name="search"
         />
-        <ButtonSearch startIcon={<IconFilter />}>Filtrar</ButtonSearch>
+        <ButtonSearch startIcon={<IconFilter />} onClick={handleSearch}>
+          Filtrar
+        </ButtonSearch>
       </HeaderSearch>
       <HeaderContainer>
         <Paragraph>{formatNumber(totalCars)} resultados</Paragraph>

@@ -5,9 +5,10 @@ import { useFormContext, useWatch } from "react-hook-form";
 import { useLocation } from "react-router-dom";
 import TopBarFilterDesktop from "./TopBarFilterDesktop";
 import TopBarFilterMobile from "./TopBarFilterMobile";
+import { FormValues } from "@/schema";
 
 const TopBarFilter = ({ totalCars }: { totalCars?: number }) => {
-  const { setValue } = useFormContext();
+  const { setValue } = useFormContext<FormValues>();
 
   const filtersActive = useWatch({ name: "filters" });
 

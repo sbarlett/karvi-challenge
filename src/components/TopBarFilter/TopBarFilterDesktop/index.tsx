@@ -1,4 +1,6 @@
 import { selectOptions } from "@/constants";
+import { useCatalogContext } from "@/context/CatalogContext";
+import { FormValues } from "@/schema";
 import { capitalizeText } from "@/utils/capitalizeText";
 import { formatNumber } from "@/utils/formatNumber";
 import { Close, ExpandMore } from "@mui/icons-material";
@@ -21,7 +23,6 @@ import {
   TextButton,
   Wrapper,
 } from "../styles";
-import { useCatalogContext } from "@/context/CatalogContext";
 
 const TopBarFilterDesktop = ({
   filtersActive,
@@ -34,7 +35,7 @@ const TopBarFilterDesktop = ({
   onClearFilters: () => void;
   totalCars?: number;
 }) => {
-  const { control } = useFormContext();
+  const { control } = useFormContext<FormValues>();
   const { setPage } = useCatalogContext();
   return (
     <Container>

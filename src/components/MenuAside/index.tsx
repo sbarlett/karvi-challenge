@@ -1,23 +1,23 @@
-import React from "react";
 import { filterOrder, filterTranslations } from "@/constants";
 import { Filters } from "@/models";
+import { FormValues } from "@/schema";
 import { capitalizeText } from "@/utils/capitalizeText";
 import { ExpandMore } from "@mui/icons-material";
-import { memo, useCallback, useState } from "react";
+import React, { memo, useCallback, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import {
-  Container,
   Accordion,
   AccordionDetails,
   AccordionSummary,
   ButtonFilter,
+  Container,
   TextButton,
   TextFilters,
   Wrapper,
 } from "./styles";
 
 const MenuAside = ({ filters }: { filters: Filters }) => {
-  const { setValue, getValues } = useFormContext();
+  const { setValue, getValues } = useFormContext<FormValues>();
 
   const [expanded, setExpanded] = useState<string | null>(null);
 

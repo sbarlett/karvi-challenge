@@ -1,5 +1,6 @@
 import useCatalog from "@/hook/useCatalog";
 import { CatalogCars, Filters } from "@/models";
+import { FormValues } from "@/schema";
 import React, { createContext, ReactNode, useContext } from "react";
 import { useFormContext } from "react-hook-form";
 
@@ -24,7 +25,7 @@ const CatalogContext = createContext<CatalogContextProps | undefined>(
 export const CatalogProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
-  const { watch } = useFormContext();
+  const { watch } = useFormContext<FormValues>();
 
   const filters = watch("filters");
   const order = watch("order");
