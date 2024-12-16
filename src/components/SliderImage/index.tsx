@@ -4,14 +4,13 @@ import { Autoplay, Navigation, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 
 import { ImageClasses } from "@/constants";
+import { Image } from "@/models";
+import { Box } from "@mui/material";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import { IconHeart } from "../assets";
 import { ButtonFav, ImageContainer, ImageContent } from "./styles";
-import { Image } from "@/models";
-
-
 
 const SliderImage = ({
   images,
@@ -54,16 +53,17 @@ const SliderImage = ({
             </ImageContent>
           </SwiperSlide>
         ))}
-        <div className={ImageClasses.pagination} />
-        {favoriteCar ? (
-          <ButtonFav onClick={onFavorite} data-testid="icon-heart-liked">
+        <Box className={ImageClasses.pagination} />
+        <ButtonFav
+          onClick={onFavorite}
+          data-testid={`${favoriteCar ? "icon-heart-liked" : "icon-heart-empty"}`}
+        >
+          {favoriteCar ? (
             <FavoriteIcon sx={{ color: "red", fontSize: 20 }} />
-          </ButtonFav>
-        ) : (
-          <ButtonFav onClick={onFavorite} data-testid="icon-heart-empty">
+          ) : (
             <IconHeart />
-          </ButtonFav>
-        )}
+          )}
+        </ButtonFav>
       </Swiper>
     </ImageContainer>
   );
