@@ -80,7 +80,7 @@ export const ImageContent = styled(Box)<{
       [theme.breakpoints.down("sm")]: {
         width: widthCard,
         height: heightCard,
-        objectFit: "contain",
+        objectFit: "cover",
       },
     },
   };
